@@ -5,9 +5,7 @@
 //  Created by Suyeol Jeon on 06/10/2019.
 //
 
-import Foundation
-
-struct Post: Decodable {
+struct Post: Decodable, Hashable {
   var id: String
   var text: String
 }

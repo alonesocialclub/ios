@@ -43,6 +43,7 @@ private extension AppDependency {
   static func registerServices() {
     self.container.autoregister(AuthServiceProtocol.self, initializer: AuthService.init)
     self.container.autoregister(UserServiceProtocol.self, initializer: UserService.init)
+    self.container.autoregister(FeedServiceProtocol.self, initializer: FeedService.init)
   }
 }
 
@@ -53,6 +54,9 @@ private extension AppDependency {
 
     self.register(JoinViewReactor.self, dependency: JoinViewReactor.Dependency.init)
     self.register(JoinViewController.self, dependency: JoinViewController.Dependency.init)
+
+    self.register(FeedViewReactor.self, dependency: FeedViewReactor.Dependency.init)
+    self.register(FeedViewController.self, dependency: FeedViewController.Dependency.init)
   }
 }
 
@@ -61,6 +65,7 @@ private extension AppDependency {
     self.container.register(UIWindow.self) { _ in UIWindow() }
     self.container.autoregister(SceneSwitcher.self, initializer: SceneSwitcher.init).initCompleted { r, sceneSwitcher in
       sceneSwitcher.joinViewControllerFactory = r.resolve(JoinViewController.Factory.self)
+      sceneSwitcher.feedViewControllerFactory = r.resolve(FeedViewController.Factory.self)
     }
   }
 }

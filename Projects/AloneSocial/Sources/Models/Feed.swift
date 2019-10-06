@@ -5,7 +5,7 @@
 //  Created by Suyeol Jeon on 06/10/2019.
 //
 
-struct Feed {
+struct Feed: Hashable {
   var posts: [Post]
 }
 

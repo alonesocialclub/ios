@@ -12,9 +12,9 @@ protocol FeedServiceProtocol {
 }
 
 final class FeedService: FeedServiceProtocol {
-  private let networking: Networking
+  private let networking: NetworkingProtocol
 
-  init(networking: Networking) {
+  init(networking: NetworkingProtocol) {
     self.networking = networking
   }
 

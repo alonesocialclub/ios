@@ -15,6 +15,7 @@ final class SceneSwitcher {
 
   private let window: UIWindow
   var joinViewControllerFactory: JoinViewController.Factory?
+  var feedViewControllerFactory: FeedViewController.Factory?
 
   init(window: UIWindow) {
     self.window = window
@@ -29,7 +30,10 @@ final class SceneSwitcher {
       self.window.rootViewController = viewController
 
     case .main:
-      self.window.rootViewController = UIViewController()
+      guard let factory = self.feedViewControllerFactory else { preconditionFailure() }
+      let reactor = factory.dependency.reactorFactory.create()
+      let viewController = factory.create(payload: .init(reactor: reactor))
+      self.window.rootViewController = UINavigationController(rootViewController: viewController)
     }
   }
 }
