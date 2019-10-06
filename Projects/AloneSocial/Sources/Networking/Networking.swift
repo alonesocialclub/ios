@@ -19,11 +19,11 @@ extension NetworkingProtocol {
 }
 
 final class Networking: MoyaSugarProvider<MultiSugarTarget>, NetworkingProtocol {
-  init(plugins: [PluginType] = []) {
+  init(authPlugin: AuthPlugin) {
     let session = MoyaProvider<MultiSugarTarget>.defaultAlamofireSession()
     session.sessionConfiguration.timeoutIntervalForRequest = 10
 
-    super.init(session: session, plugins: plugins)
+    super.init(session: session, plugins: [authPlugin])
   }
 
   func request(_ target: SugarTargetType, file: StaticString, function: StaticString, line: UInt) -> Single<Response> {
