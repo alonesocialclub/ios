@@ -1,5 +1,6 @@
 PODS:
   - Alamofire (5.0.0-rc.2)
+  - BonMot (5.4.1)
   - CocoaLumberjack/Core (3.6.0)
   - CocoaLumberjack/Swift (3.6.0):
     - CocoaLumberjack/Core
@@ -47,6 +48,10 @@ PODS:
   - RxCocoa (5.0.0):
     - RxRelay (~> 5)
     - RxSwift (~> 5)
+  - RxCocoa-Texture (3.1.0):
+    - RxCocoa (~> 5.0)
+    - RxSwift (~> 5.0)
+    - Texture (~> 2.7)
   - RxCodable (1.0.0):
     - RxCodable/Core (= 1.0.0)
   - RxCodable/Core (1.0.0):
@@ -70,6 +75,8 @@ PODS:
     - RxCocoa (~> 5.0)
     - RxSwift (~> 5.0)
   - Stubber (1.4.0)
+  - SwiftyColor (1.2.0)
+  - SwiftyImage (1.5.1)
   - Swinject (2.7.1)
   - SwinjectAutoregistration (2.6.1):
     - Swinject (~> 2.6)
@@ -96,6 +103,7 @@ PODS:
   - Then (2.6.0)
 
 DEPENDENCIES:
+  - BonMot
   - CocoaLumberjack/Swift
   - KeychainAccess
   - Moya (= 14.0.0-beta.4)
@@ -108,6 +116,7 @@ DEPENDENCIES:
   - Quick
   - ReactorKit
   - RxCocoa
+  - RxCocoa-Texture
   - RxCodable
   - RxDataSources
   - RxDataSources-Texture
@@ -116,6 +125,8 @@ DEPENDENCIES:
   - RxSwift
   - RxViewController
   - Stubber
+  - SwiftyColor
+  - SwiftyImage
   - Swinject
   - SwinjectAutoregistration
   - Texture
@@ -124,6 +135,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Alamofire
+    - BonMot
     - CocoaLumberjack
     - Differentiator
     - KeychainAccess
@@ -137,6 +149,7 @@ SPEC REPOS:
     - Quick
     - ReactorKit
     - RxCocoa
+    - RxCocoa-Texture
     - RxCodable
     - RxDataSources
     - RxDataSources-Texture
@@ -145,6 +158,8 @@ SPEC REPOS:
     - RxSwift
     - RxViewController
     - Stubber
+    - SwiftyColor
+    - SwiftyImage
     - Swinject
     - SwinjectAutoregistration
     - Texture
@@ -152,6 +167,7 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Alamofire: f9450d3c7f6bea2ad62e7a541c3e9b186c7991d6
+  BonMot: aa82119ff2ffa184223d8a31c72aed84fbb009e0
   CocoaLumberjack: 78b0c238666f4f58db069738ec176f4519557516
   Differentiator: 886080237d9f87f322641dedbc5be257061b0602
   KeychainAccess: 3b1bf8a77eb4c6ea1ce9404c292e48f948954c6b
@@ -165,6 +181,7 @@ SPEC CHECKSUMS:
   Quick: 7fb19e13be07b5dfb3b90d4f9824c855a11af40e
   ReactorKit: a63c5e11e0fd32d59d672e54178b0ed2876b764b
   RxCocoa: fcf32050ac00d801f34a7f71d5e8e7f23026dcd8
+  RxCocoa-Texture: 90abb54f5d153746fe414f4d04e6d2e6cf91d70e
   RxCodable: 468b37793b66d804a5b1be16e817d7aab408b52b
   RxDataSources: efee07fa4de48477eca0a4611e6d11e2da9c1114
   RxDataSources-Texture: 3606ddbd1b03773d02c8d03bda74fc5f171d6c0f
@@ -173,11 +190,13 @@ SPEC CHECKSUMS:
   RxSwift: 8b0671caa829a763bbce7271095859121cbd895f
   RxViewController: 7330a46e5c31cd680db169da4c9fc8676e975a81
   Stubber: 241303d241ad91f70d6d6d20cdaeae5255c82b57
+  SwiftyColor: ac23e6c0b561838c1ef0f554ff170cceba14546b
+  SwiftyImage: 88a8c90ee3963a498de728c4ccdb079b4820cef0
   Swinject: ddf78b8486dd9b71a667b852cad919ab4484478e
   SwinjectAutoregistration: d0de7e48db3601b8b130f2f84e5a8399e0224135
   Texture: 8ecf6984065a1e54f06bf97b349ecca28582acd7
   Then: 90cd104fd951cec1980a03f57704ad8f784d4d79
 
-PODFILE CHECKSUM: 51a9996a89f4ad8dd7f4dd6c2420f4db359c1a82
+PODFILE CHECKSUM: 4ba1bcc4fc22b082d02281b73071712703b00a20
 
 COCOAPODS: 1.8.3

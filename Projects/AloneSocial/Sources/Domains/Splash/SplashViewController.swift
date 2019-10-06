@@ -18,11 +18,17 @@ final class SplashViewController: BaseViewController, View, FactoryModule {
 
   struct Dependency {
     let reactorFactory: SplashViewReactor.Factory
+    let sceneSwitcher: SceneSwitcher
   }
 
   struct Payload {
     let reactor: SplashViewReactor
   }
+
+
+  // MARK: Properties
+
+  private let dependency: Dependency
 
 
   // MARK: UI
@@ -34,18 +40,12 @@ final class SplashViewController: BaseViewController, View, FactoryModule {
 
   init(dependency: Dependency, payload: Payload) {
     defer { self.reactor = payload.reactor }
+    self.dependency = dependency
     super.init()
   }
 
   required convenience init(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
-  }
-
-
-  // MARK: View Lifecycle
-
-  override func viewDidLoad() {
-    super.viewDidLoad()
   }
 
 
@@ -69,7 +69,18 @@ final class SplashViewController: BaseViewController, View, FactoryModule {
   }
 
   private func bindNavigation(reactor: SplashViewReactor) {
+    reactor.state.map { $0.isAuthenticated }
+      .filterNil()
+      .distinctUntilChanged()
+      .subscribe(onNext: { [weak self] isAuthenticated in
+        guard let self = self else { return }
+        if !isAuthenticated {
+          self.dependency.sceneSwitcher.switch(to: .join)
+        } else {
 
+        }
+      })
+      .disposed(by: self.disposeBag)
   }
 
 

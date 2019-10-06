@@ -22,6 +22,7 @@ target 'AloneSocial' do
   # Rx
   pod 'RxSwift'
   pod 'RxCocoa'
+  pod 'RxCocoa-Texture'
   pod 'RxRelay'
   pod 'RxDataSources'
   pod 'RxDataSources-Texture'
@@ -35,6 +36,9 @@ target 'AloneSocial' do
   # Misc.
   pod 'Then'
   pod 'KeychainAccess'
+  pod 'BonMot'
+  pod 'SwiftyColor'
+  pod 'SwiftyImage'
 
   target 'AloneSocialTests' do
     inherit! :search_paths

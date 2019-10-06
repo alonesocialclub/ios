@@ -12,10 +12,10 @@ protocol AuthServiceProtocol {
 }
 
 final class AuthService: AuthServiceProtocol {
-  private let networking: Networking
+  private let networking: NetworkingProtocol
   private let authTokenStore: AuthTokenStore
 
-  init(networking: Networking, authTokenStore: AuthTokenStore) {
+  init(networking: NetworkingProtocol, authTokenStore: AuthTokenStore) {
     self.networking = networking
     self.authTokenStore = authTokenStore
   }
