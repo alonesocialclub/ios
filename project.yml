@@ -1,0 +1,41 @@
+name: AloneSocial
+options:
+  bundleIdPrefix: social.alone.ios
+  deploymentTarget:
+    iOS: 12.0
+  defaultConfig: Release
+  createIntermediateGroups: true
+  transitivelyLinkDependencies: true
+  tabWidth: 2
+  indentWidth: 2
+
+settings:
+  base:
+    SWIFT_VERSION: 5.1
+    CLANG_ENABLE_MODULES: YES
+    COPY_PHASE_STRIP: NO
+
+  configs:
+    debug:
+      SWIFT_OPTIMIZATION_LEVEL: -Onone
+      ENABLE_TESTABILITY: YES
+      ONLY_ACTIVE_ARCH: YES
+      SWIFT_COMPILATION_MODE: incremental
+
+    release:
+      SWIFT_OPTIMIZATION_LEVEL: -O
+      SWIFT_COMPILATION_MODE: wholemodule
+
+schemes:
+  AllTests:
+    build:
+      targets:
+        AloneSocial: test
+    test:
+      gatherCoverageData: true
+      targets:
+        - AloneSocialTests
+
+include:
+  - Projects/templates.yml
+  - Projects/AloneSocial/project.yml

@@ -1,0 +1,33 @@
+targets:
+  AloneSocial:
+    type: application
+    platform: iOS
+    sources:
+      - path: Sources
+      - path: Resources
+      - path: Supporting Files
+    dependencies:
+      - sdk: Foundation.framework
+      - sdk: UIKit.framework
+    settings:
+      PRODUCT_NAME: AloneSocial
+      PRODUCT_BUNDLE_IDENTIFIER: $(PRODUCT_NAME)
+      INFOPLIST_FILE: "$(SRCROOT)/Projects/AloneSocial/Supporting Files/Info.plist"
+
+  AloneSocialTests:
+    templates: [UnitTest]
+    templateAttributes:
+      testTarget: AloneSocial
+
+schemes:
+  AloneSocial:
+    build:
+      targets:
+        AloneSocial: all
+        AloneSocialTests: [test]
+    run:
+      environmentVariables:
+        OS_ACTIVITY_MODE: disable
+    test:
+      gatherCoverageData: true
+      targets: [AloneSocialTests]

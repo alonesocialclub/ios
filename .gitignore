@@ -1,0 +1,6 @@
+*.xcodeproj
+*.xcworkspace
+build
+Pods/
+test_output/
+

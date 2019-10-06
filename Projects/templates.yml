@@ -1,0 +1,32 @@
+targetTemplates:
+  Framework:
+    type: framework
+    platform: iOS
+    sources:
+      - path: ${target_name}/Sources
+    dependencies:
+      - sdk: Foundation.framework
+    settings:
+      PRODUCT_NAME: ${target_name}
+      PRODUCT_BUNDLE_IDENTIFIER: $(PRODUCT_NAME)
+      INFOPLIST_FILE: $(SRCROOT)/Projects/Info.plist
+    scheme:
+      testTargets:
+        - ${target_name}Tests
+      gatherCoverageData: true
+
+  UnitTest:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: ${testTarget}/Tests
+    dependencies:
+      - target: ${testTarget}
+    settings:
+      WRAPPER_EXTENSION: xctest
+      PRODUCT_NAME: ${target_name}
+      PRODUCT_BUNDLE_IDENTIFIER: $(PRODUCT_NAME)
+      BUNDLE_LOADER: $(TEST_HOST)
+      INFOPLIST_FILE: $(SRCROOT)/Projects/Info.plist
+    profile:
+      config: Debug

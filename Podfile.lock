@@ -1,0 +1,170 @@
+PODS:
+  - Alamofire (5.0.0-rc.2)
+  - CocoaLumberjack/Core (3.6.0)
+  - CocoaLumberjack/Swift (3.6.0):
+    - CocoaLumberjack/Core
+  - Differentiator (4.0.1)
+  - Moya (14.0.0-beta.4):
+    - Moya/Core (= 14.0.0-beta.4)
+  - Moya/Core (14.0.0-beta.4):
+    - Alamofire (= 5.0.0-rc.2)
+  - Moya/RxSwift (14.0.0-beta.4):
+    - Moya/Core
+    - RxSwift (~> 5.0)
+  - MoyaSugar (1.3.1):
+    - MoyaSugar/Core (= 1.3.1)
+  - MoyaSugar/Core (1.3.1):
+    - Moya (>= 14.0.0-beta.2)
+  - MoyaSugar/RxSwift (1.3.1):
+    - Moya/RxSwift (>= 14.0.0-beta.2)
+    - MoyaSugar/Core
+    - RxSwift (>= 5.0.0)
+  - Nimble (8.0.4)
+  - PINCache (3.0.1-beta.6):
+    - PINCache/Arc-exception-safe (= 3.0.1-beta.6)
+    - PINCache/Core (= 3.0.1-beta.6)
+  - PINCache/Arc-exception-safe (3.0.1-beta.6):
+    - PINCache/Core
+  - PINCache/Core (3.0.1-beta.6):
+    - PINOperation (~> 1.1.0)
+  - PINOperation (1.1.2)
+  - PINRemoteImage/Core (3.0.0-beta.13):
+    - PINOperation
+  - PINRemoteImage/iOS (3.0.0-beta.13):
+    - PINRemoteImage/Core
+  - PINRemoteImage/PINCache (3.0.0-beta.13):
+    - PINCache (= 3.0.1-beta.6)
+    - PINRemoteImage/Core
+  - Pure (1.1.1):
+    - Pure/Core (= 1.1.1)
+  - Pure/Core (1.1.1)
+  - Pure/Stub (1.1.1):
+    - Pure/Core
+  - Quick (2.2.0)
+  - ReactorKit (2.0.1):
+    - RxSwift (~> 5.0)
+  - RxCocoa (5.0.0):
+    - RxRelay (~> 5)
+    - RxSwift (~> 5)
+  - RxCodable (1.0.0):
+    - RxCodable/Core (= 1.0.0)
+  - RxCodable/Core (1.0.0):
+    - RxSwift (~> 5.0)
+  - RxDataSources (4.0.1):
+    - Differentiator (~> 4.0)
+    - RxCocoa (~> 5.0)
+    - RxSwift (~> 5.0)
+  - RxDataSources-Texture (1.2.5):
+    - Differentiator (~> 4.0)
+    - RxCocoa (~> 5.0)
+    - RxSwift (~> 5.0)
+    - Texture (>= 2.7)
+  - RxOptional (4.0.0):
+    - RxCocoa (~> 5)
+    - RxSwift (~> 5)
+  - RxRelay (5.0.0):
+    - RxSwift (~> 5)
+  - RxSwift (5.0.0)
+  - RxViewController (1.0.0):
+    - RxCocoa (~> 5.0)
+    - RxSwift (~> 5.0)
+  - Stubber (1.4.0)
+  - Texture (2.8.1):
+    - Texture/AssetsLibrary (= 2.8.1)
+    - Texture/Core (= 2.8.1)
+    - Texture/MapKit (= 2.8.1)
+    - Texture/Photos (= 2.8.1)
+    - Texture/PINRemoteImage (= 2.8.1)
+    - Texture/Video (= 2.8.1)
+  - Texture/AssetsLibrary (2.8.1):
+    - Texture/Core
+  - Texture/Core (2.8.1)
+  - Texture/MapKit (2.8.1):
+    - Texture/Core
+  - Texture/Photos (2.8.1):
+    - Texture/Core
+  - Texture/PINRemoteImage (2.8.1):
+    - PINRemoteImage/iOS (= 3.0.0-beta.13)
+    - PINRemoteImage/PINCache
+    - Texture/Core
+  - Texture/Video (2.8.1):
+    - Texture/Core
+  - Then (2.6.0)
+
+DEPENDENCIES:
+  - CocoaLumberjack/Swift
+  - Moya (= 14.0.0-beta.4)
+  - Moya/RxSwift (= 14.0.0-beta.4)
+  - MoyaSugar (= 1.3.1)
+  - MoyaSugar/RxSwift (= 1.3.1)
+  - Nimble
+  - Pure
+  - Pure/Stub
+  - Quick
+  - ReactorKit
+  - RxCocoa
+  - RxCodable
+  - RxDataSources
+  - RxDataSources-Texture
+  - RxOptional
+  - RxRelay
+  - RxSwift
+  - RxViewController
+  - Stubber
+  - Texture
+  - Then
+
+SPEC REPOS:
+  trunk:
+    - Alamofire
+    - CocoaLumberjack
+    - Differentiator
+    - Moya
+    - MoyaSugar
+    - Nimble
+    - PINCache
+    - PINOperation
+    - PINRemoteImage
+    - Pure
+    - Quick
+    - ReactorKit
+    - RxCocoa
+    - RxCodable
+    - RxDataSources
+    - RxDataSources-Texture
+    - RxOptional
+    - RxRelay
+    - RxSwift
+    - RxViewController
+    - Stubber
+    - Texture
+    - Then
+
+SPEC CHECKSUMS:
+  Alamofire: f9450d3c7f6bea2ad62e7a541c3e9b186c7991d6
+  CocoaLumberjack: 78b0c238666f4f58db069738ec176f4519557516
+  Differentiator: 886080237d9f87f322641dedbc5be257061b0602
+  Moya: 53fa45a72929809e0b8bba44a0a53d8d0827bcfe
+  MoyaSugar: c1cca40b0a6fb4cdc6d1243b031acd5729ed9289
+  Nimble: 18d5360282923225d62b09d781f63abc1a0111fc
+  PINCache: d195fdba255283f7e9900a55e3cced377f431f9b
+  PINOperation: 24b774353ca248fcf87d67b2d61eef42087c125a
+  PINRemoteImage: d6d51c5d2adda55f1ce30c96e850b6c4ebd2856a
+  Pure: 357b42547feb653dd88d47ac7c8248bf84afaaad
+  Quick: 7fb19e13be07b5dfb3b90d4f9824c855a11af40e
+  ReactorKit: a63c5e11e0fd32d59d672e54178b0ed2876b764b
+  RxCocoa: fcf32050ac00d801f34a7f71d5e8e7f23026dcd8
+  RxCodable: 468b37793b66d804a5b1be16e817d7aab408b52b
+  RxDataSources: efee07fa4de48477eca0a4611e6d11e2da9c1114
+  RxDataSources-Texture: 3606ddbd1b03773d02c8d03bda74fc5f171d6c0f
+  RxOptional: 9904e2219d59260c3c171273d475b2126de187e8
+  RxRelay: 4f7409406a51a55cd88483f21ed898c234d60f18
+  RxSwift: 8b0671caa829a763bbce7271095859121cbd895f
+  RxViewController: 7330a46e5c31cd680db169da4c9fc8676e975a81
+  Stubber: 241303d241ad91f70d6d6d20cdaeae5255c82b57
+  Texture: 8ecf6984065a1e54f06bf97b349ecca28582acd7
+  Then: 90cd104fd951cec1980a03f57704ad8f784d4d79
+
+PODFILE CHECKSUM: f34e0200b3a058656c62c4aff5b4f7094aff74a7
+
+COCOAPODS: 1.8.3
