@@ -32,6 +32,7 @@ target 'AloneSocial' do
 
   # Misc.
   pod 'Then'
+  pod 'KeychainAccess'
 
   target 'AloneSocialTests' do
     inherit! :search_paths
