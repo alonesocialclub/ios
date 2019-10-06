@@ -26,9 +26,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     let window = UIWindow(frame: UIScreen.main.bounds)
     window.backgroundColor = .white
-    window.rootViewController = UIViewController()
+    window.rootViewController = self.createSplashViewController()
     window.makeKeyAndVisible()
     self.window = window
     return true
+  }
+
+  private func createSplashViewController() -> SplashViewController {
+    let reactor = self.dependency.splashViewControllerFactory.dependency.reactorFactory.create()
+    return self.dependency.splashViewControllerFactory.create(payload: .init(reactor: reactor))
   }
 }

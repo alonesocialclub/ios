@@ -10,6 +10,8 @@ target 'AloneSocial' do
   # DI
   pod 'Pure'
   pod 'Pure/Stub'  # https://github.com/CocoaPods/CocoaPods/issues/7195
+  pod 'Swinject'
+  pod 'SwinjectAutoregistration'
 
   # Networking
   pod 'Moya', '14.0.0-beta.4'
