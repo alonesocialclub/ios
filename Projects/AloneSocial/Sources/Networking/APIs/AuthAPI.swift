@@ -15,7 +15,7 @@ extension AuthAPI {
   var route: Route {
     switch self {
     case .join:
-      return .get("/v1/auth/join")
+      return .post("/anonymous/join")
     }
   }
 
