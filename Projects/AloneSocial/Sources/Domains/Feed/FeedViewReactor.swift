@@ -69,9 +69,14 @@ final class FeedViewReactor: Reactor, FactoryModule {
       newState.posts = feed.posts
 
     case .updateSections:
-      let items = newState.posts.map(FeedViewSection.Item.init)
-      let section = FeedViewSection(items: items)
-      newState.sections = [section]
+      newState.sections.removeAll()
+      newState.sections.append(FeedViewSection(items: [.title]))
+
+      if !newState.posts.isEmpty {
+        let items = newState.posts.map(FeedViewSection.Item.post)
+        let section = FeedViewSection(items: items)
+        newState.sections.append(section)
+      }
     }
 
     return newState

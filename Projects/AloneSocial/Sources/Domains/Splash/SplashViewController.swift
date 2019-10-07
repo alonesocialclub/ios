@@ -77,7 +77,7 @@ final class SplashViewController: BaseViewController, View, FactoryModule {
         if !isAuthenticated {
           self.dependency.sceneSwitcher.switch(to: .join)
         } else {
-
+          self.dependency.sceneSwitcher.switch(to: .main)
         }
       })
       .disposed(by: self.disposeBag)

@@ -23,8 +23,9 @@ extension FeedViewSection: AnimatableSectionModelType {
 }
 
 extension FeedViewSection {
-  struct Item: Hashable {
-    let post: Post
+  enum Item: Hashable {
+    case title
+    case post(Post)
   }
 }
 

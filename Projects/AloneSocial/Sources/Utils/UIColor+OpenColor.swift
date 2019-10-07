@@ -8,6 +8,10 @@
 import UIKit
 
 extension UIColor {
+  static let as_placeholder: UIColor = oc_gray2
+}
+
+extension UIColor {
   static let oc_gray0: UIColor = color(light: 0xf8f9fa, dark: 0xf8f9fa)
   static let oc_gray1: UIColor = color(light: 0xf1f3f5, dark: 0xf1f3f5)
   static let oc_gray2: UIColor = color(light: 0xe9ecef, dark: 0xe9ecef)

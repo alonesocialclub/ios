@@ -55,6 +55,7 @@ private extension AppDependency {
     self.register(JoinViewReactor.self, dependency: JoinViewReactor.Dependency.init)
     self.register(JoinViewController.self, dependency: JoinViewController.Dependency.init)
 
+    self.register(PostCellNode.self, dependency: PostCellNode.Dependency.init)
     self.register(FeedViewReactor.self, dependency: FeedViewReactor.Dependency.init)
     self.register(FeedViewController.self, dependency: FeedViewController.Dependency.init)
   }
@@ -74,12 +75,10 @@ private extension AppDependency {
 // MARK: Swinject+FactoryModule
 
 private extension AppDependency {
-  private static func register<Module>(_ module: Module.Type, dependency: @escaping () -> Module.Dependency) where Module: FactoryModule {
-    self.container.autoregister(Module.Dependency.self, initializer: dependency)
-    self._register(module)
-  }
-
   private static func register<Module, Arg1>(_ module: Module.Type, dependency: @escaping (Arg1) -> Module.Dependency) where Module: FactoryModule {
+    if Arg1.self == Void.self {
+      self.container.register(Void.self) { _ in Void() }
+    }
     self.container.autoregister(Module.Dependency.self, initializer: dependency)
     self._register(module)
   }
