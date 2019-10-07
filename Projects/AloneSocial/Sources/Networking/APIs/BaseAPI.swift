@@ -12,7 +12,7 @@ protocol BaseAPI: SugarTargetType {
 
 extension BaseAPI {
   var baseURL: URL {
-    return URL(string: "https://api.alone.social")!
+    return URL(string: "http://52.78.145.107")!
   }
 
   var headers: [String: String]? {
