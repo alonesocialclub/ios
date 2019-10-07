@@ -1,6 +1,6 @@
 name: AloneSocial
 options:
-  bundleIdPrefix: social.alone.ios
+  bundleIdPrefix: com.alonesocial
   deploymentTarget:
     iOS: 12.0
   defaultConfig: Release

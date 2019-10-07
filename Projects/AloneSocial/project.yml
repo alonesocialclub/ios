@@ -11,7 +11,7 @@ targets:
       - sdk: UIKit.framework
     settings:
       PRODUCT_NAME: AloneSocial
-      PRODUCT_BUNDLE_IDENTIFIER: $(PRODUCT_NAME)
+      PRODUCT_BUNDLE_IDENTIFIER: com.alonesocial.ios
       INFOPLIST_FILE: "$(SRCROOT)/Projects/AloneSocial/Supporting Files/Info.plist"
 
   AloneSocialTests:
