@@ -1,6 +1,7 @@
 PODS:
   - Alamofire (5.0.0-rc.2)
   - BonMot (5.4.1)
+  - CGFloatLiteral (0.5.0)
   - CocoaLumberjack/Core (3.6.0)
   - CocoaLumberjack/Swift (3.6.0):
     - CocoaLumberjack/Core
@@ -101,9 +102,11 @@ PODS:
   - Texture/Video (2.8.1):
     - Texture/Core
   - Then (2.6.0)
+  - URLNavigator (2.2.0)
 
 DEPENDENCIES:
   - BonMot
+  - CGFloatLiteral
   - CocoaLumberjack/Swift
   - KeychainAccess
   - Moya (= 14.0.0-beta.4)
@@ -131,11 +134,13 @@ DEPENDENCIES:
   - SwinjectAutoregistration
   - Texture
   - Then
+  - URLNavigator
 
 SPEC REPOS:
   trunk:
     - Alamofire
     - BonMot
+    - CGFloatLiteral
     - CocoaLumberjack
     - Differentiator
     - KeychainAccess
@@ -164,10 +169,12 @@ SPEC REPOS:
     - SwinjectAutoregistration
     - Texture
     - Then
+    - URLNavigator
 
 SPEC CHECKSUMS:
   Alamofire: f9450d3c7f6bea2ad62e7a541c3e9b186c7991d6
   BonMot: aa82119ff2ffa184223d8a31c72aed84fbb009e0
+  CGFloatLiteral: 0328648f666e3cb2263d5ee3972df9d320786d25
   CocoaLumberjack: 78b0c238666f4f58db069738ec176f4519557516
   Differentiator: 886080237d9f87f322641dedbc5be257061b0602
   KeychainAccess: 3b1bf8a77eb4c6ea1ce9404c292e48f948954c6b
@@ -196,7 +203,8 @@ SPEC CHECKSUMS:
   SwinjectAutoregistration: d0de7e48db3601b8b130f2f84e5a8399e0224135
   Texture: 8ecf6984065a1e54f06bf97b349ecca28582acd7
   Then: 90cd104fd951cec1980a03f57704ad8f784d4d79
+  URLNavigator: 0bffc3efdeb2d97f7b5eec7ac82d290f4a099431
 
-PODFILE CHECKSUM: 4ba1bcc4fc22b082d02281b73071712703b00a20
+PODFILE CHECKSUM: 936ca092fc7a06f057f326a81987dc05cac7c698
 
 COCOAPODS: 1.8.3

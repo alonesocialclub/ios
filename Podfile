@@ -39,6 +39,8 @@ target 'AloneSocial' do
   pod 'BonMot'
   pod 'SwiftyColor'
   pod 'SwiftyImage'
+  pod 'URLNavigator'
+  pod 'CGFloatLiteral'
 
   target 'AloneSocialTests' do
     inherit! :search_paths

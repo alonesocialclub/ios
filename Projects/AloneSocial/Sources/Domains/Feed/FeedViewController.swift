@@ -19,6 +19,7 @@ final class FeedViewController: BaseViewController, View, FactoryModule {
 
   struct Dependency {
     let reactorFactory: FeedViewReactor.Factory
+    let titleCellNodeFactory: FeedViewTitleCellNode.Factory
     let postCellNodeFactory: PostCellNode.Factory
   }
 
@@ -61,7 +62,7 @@ final class FeedViewController: BaseViewController, View, FactoryModule {
       configureCellBlock: { dataSource, collectionNode, indexPath, sectionItem in
         switch sectionItem {
         case .title:
-          return { FeedViewTitleCellNode() }
+          return { dependency.titleCellNodeFactory.create() }
 
         case let .post(post):
           return { dependency.postCellNodeFactory.create(payload: .init(post: post)) }
@@ -75,6 +76,7 @@ final class FeedViewController: BaseViewController, View, FactoryModule {
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    self.view.backgroundColor = .white
     self.collectionNode.view.refreshControl = self.refreshControl
   }
 

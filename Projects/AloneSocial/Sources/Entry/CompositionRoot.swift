@@ -10,6 +10,7 @@ import Pure
 import ReactorKit
 import Swinject
 import SwinjectAutoregistration
+import URLNavigator
 
 struct AppDependency {
   let window: UIWindow
@@ -22,6 +23,7 @@ extension AppDependency {
   static func resolve() -> AppDependency {
     self.registerNetworking()
     self.registerServices()
+    self.registerNavigator()
     self.registerViewControllers()
     self.registerScene()
 
@@ -48,6 +50,12 @@ private extension AppDependency {
 }
 
 private extension AppDependency {
+  static func registerNavigator() {
+    self.container.autoregister(NavigatorType.self, initializer: Navigator.init)
+  }
+}
+
+private extension AppDependency {
   static func registerViewControllers() {
     self.register(SplashViewReactor.self, dependency: SplashViewReactor.Dependency.init)
     self.register(SplashViewController.self, dependency: SplashViewController.Dependency.init)
@@ -55,6 +63,7 @@ private extension AppDependency {
     self.register(JoinViewReactor.self, dependency: JoinViewReactor.Dependency.init)
     self.register(JoinViewController.self, dependency: JoinViewController.Dependency.init)
 
+    self.register(FeedViewTitleCellNode.self, dependency: FeedViewTitleCellNode.Dependency.init)
     self.register(PostCellNode.self, dependency: PostCellNode.Dependency.init)
     self.register(FeedViewReactor.self, dependency: FeedViewReactor.Dependency.init)
     self.register(FeedViewController.self, dependency: FeedViewController.Dependency.init)
@@ -91,17 +100,17 @@ private extension AppDependency {
     self._register(module)
   }
 
-  private static func register<Module, Arg1, Arg2, Arg3>(_ module: Module.Type, dependency: @escaping (Arg1, Arg2, Arg3) -> Module.Dependency) where Module: FactoryModule {
+  private static func register<Module, Arg1, Arg2, Arg3>(_ module: Module.Type, dependency: @escaping ((Arg1, Arg2, Arg3)) -> Module.Dependency) where Module: FactoryModule {
     self.container.autoregister(Module.Dependency.self, initializer: dependency)
     self._register(module)
   }
 
-  private static func register<Module, Arg1, Arg2, Arg3, Arg4>(_ module: Module.Type, dependency: @escaping (Arg1, Arg2, Arg3, Arg4) -> Module.Dependency) where Module: FactoryModule {
+  private static func register<Module, Arg1, Arg2, Arg3, Arg4>(_ module: Module.Type, dependency: @escaping ((Arg1, Arg2, Arg3, Arg4)) -> Module.Dependency) where Module: FactoryModule {
     self.container.autoregister(Module.Dependency.self, initializer: dependency)
     self._register(module)
   }
 
-  private static func register<Module, Arg1, Arg2, Arg3, Arg4, Arg5>(_ module: Module.Type, dependency: @escaping (Arg1, Arg2, Arg3, Arg4, Arg5) -> Module.Dependency) where Module: FactoryModule {
+  private static func register<Module, Arg1, Arg2, Arg3, Arg4, Arg5>(_ module: Module.Type, dependency: @escaping ((Arg1, Arg2, Arg3, Arg4, Arg5)) -> Module.Dependency) where Module: FactoryModule {
     self.container.autoregister(Module.Dependency.self, initializer: dependency)
     self._register(module)
   }

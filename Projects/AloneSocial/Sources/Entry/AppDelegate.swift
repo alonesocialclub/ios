@@ -26,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     let window = self.dependency.window
     window.frame = UIScreen.main.bounds
-    window.backgroundColor = .white
+    window.backgroundColor = .black
     window.rootViewController = self.createSplashViewController()
     window.makeKeyAndVisible()
     self.window = window

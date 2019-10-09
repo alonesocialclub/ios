@@ -56,6 +56,7 @@ final class FeedViewReactor: Reactor, FactoryModule {
     return self.dependency.feedService.feed()
       .map(Mutation.setFeed)
       .asObservable()
+      .catchError { _ in .empty() }
   }
 
   func reduce(state: State, mutation: Mutation) -> State {
