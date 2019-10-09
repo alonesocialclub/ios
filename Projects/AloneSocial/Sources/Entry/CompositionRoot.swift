@@ -58,6 +58,9 @@ private extension AppDependency {
     self.register(PostCellNode.self, dependency: PostCellNode.Dependency.init)
     self.register(FeedViewReactor.self, dependency: FeedViewReactor.Dependency.init)
     self.register(FeedViewController.self, dependency: FeedViewController.Dependency.init)
+
+    self.register(PostEditorViewReactor.self, dependency: PostEditorViewReactor.Dependency.init)
+    self.register(PostEditorViewController.self, dependency: PostEditorViewController.Dependency.init)
   }
 }
 
