@@ -87,7 +87,9 @@ final class FeedViewTitleCellNode: ASCellNode, FactoryModule {
   }
 
   @objc private func uploadButtonNodeDidTap() {
-    let reactor = self.dependency.postEditorViewControllerFactory.dependency.reactorFactory.create()
+    let reactor = self.dependency.postEditorViewControllerFactory.dependency.reactorFactory.create(payload: .init(
+      mode: .new
+    ))
     let viewController = self.dependency.postEditorViewControllerFactory.create(payload: .init(reactor: reactor))
     self.dependency.navigator.present(viewController, wrap: UINavigationController.self)
   }
