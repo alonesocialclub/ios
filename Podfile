@@ -30,15 +30,18 @@ target 'AloneSocial' do
   pod 'RxViewController'
   pod 'RxCodable'
 
+  # UI
+  pod 'BonMot'
+  pod 'SwiftyColor'
+  pod 'SwiftyImage'
+  pod 'YPImagePicker'
+
   # Logging
   pod 'CocoaLumberjack/Swift'
 
   # Misc.
   pod 'Then'
   pod 'KeychainAccess'
-  pod 'BonMot'
-  pod 'SwiftyColor'
-  pod 'SwiftyImage'
   pod 'URLNavigator'
   pod 'CGFloatLiteral'
 
