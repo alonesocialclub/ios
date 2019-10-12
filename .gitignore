@@ -2,5 +2,6 @@
 *.xcworkspace
 build
 Pods/
+fastlane/README.md
+fastlane/report.xml
 test_output/
-

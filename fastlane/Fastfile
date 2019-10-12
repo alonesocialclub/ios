@@ -1,0 +1,28 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+default_platform(:ios)
+
+platform :ios do
+  desc "Push a new beta build to TestFlight"
+  lane :beta do
+    make_project
+    build_app(workspace: "AloneSocial.xcworkspace", scheme: "AloneSocial")
+    upload_to_testflight
+  end
+end
+
+def make_project()
+  Dir.chdir("..") do
+    sh "make project"
+  end
+end
