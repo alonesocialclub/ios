@@ -71,6 +71,8 @@ final class FeedViewReactor: Reactor, FactoryModule {
 
     case .updateSections:
       newState.sections.removeAll()
+      defer { newState.sections.removeDuplicates() }
+
       newState.sections.append(FeedViewSection(items: [.title]))
 
       if !newState.posts.isEmpty {
