@@ -21,11 +21,13 @@ final class SplashViewReactor: Reactor, FactoryModule, Hashable {
   enum Mutation {
     case setLoading(Bool)
     case setAuthenticated(Bool)
+    case setError(Error)
   }
 
   struct State: Hashable {
     var isLoading: Bool = false
     var isAuthenticated: Bool?
+    var errorMessage: String?
   }
 
   private let dependency: Dependency
@@ -51,7 +53,13 @@ final class SplashViewReactor: Reactor, FactoryModule, Hashable {
   private func fetchAuthenticated() -> Observable<Mutation> {
     return self.dependency.userService.me()
     .map { _ in Mutation.setAuthenticated(true) }
-    .catchErrorJustReturn(Mutation.setAuthenticated(false))
+    .catchError { error -> Single<Mutation> in
+      if error.httpStatusCode == 401 {
+        return .just(Mutation.setAuthenticated(false))
+      } else {
+        return .just(Mutation.setError(error))
+      }
+    }
     .asObservable()
   }
 
@@ -63,6 +71,9 @@ final class SplashViewReactor: Reactor, FactoryModule, Hashable {
 
     case let .setAuthenticated(isAuthenticated):
       newState.isAuthenticated = isAuthenticated
+
+    case let .setError(error):
+      newState.errorMessage = error.localizedDescription
     }
     return newState
   }
