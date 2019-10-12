@@ -1,0 +1,11 @@
+whitelist_rules:
+  - quick_discouraged_focused_test
+  - quick_discouraged_pending_test
+  - leading_whitespace
+  - trailing_whitespace
+
+leading_whitespace:
+  severity: error
+
+trailing_whitespace:
+  severity: error
