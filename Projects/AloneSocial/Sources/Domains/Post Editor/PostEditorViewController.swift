@@ -79,14 +79,6 @@ final class PostEditorViewController: BaseViewController, View, FactoryModule {
   }
 
 
-  // MARK: View Lifecycle
-
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    self.view.backgroundColor = .white
-  }
-
-
   // MARK: Binding
 
   func bind(reactor: PostEditorViewReactor) {

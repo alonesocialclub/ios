@@ -32,6 +32,14 @@ class BaseViewController: ASViewController<ASDisplayNode> {
   }
 
 
+  // MARK: View Life Cycle
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    self.view.backgroundColor = .white
+  }
+
+
   // MARK: Rx
 
   var disposeBag = DisposeBag()

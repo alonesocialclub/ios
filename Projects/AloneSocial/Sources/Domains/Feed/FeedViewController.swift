@@ -76,7 +76,6 @@ final class FeedViewController: BaseViewController, View, FactoryModule {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    self.view.backgroundColor = .white
     self.collectionNode.view.refreshControl = self.refreshControl
   }
 
