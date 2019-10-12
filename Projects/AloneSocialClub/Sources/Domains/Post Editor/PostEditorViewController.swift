@@ -145,6 +145,11 @@ final class PostEditorViewController: BaseViewController, View, FactoryModule {
   }
 
   private func bindSubmit(reactor: PostEditorViewReactor) {
+    reactor.state.map { $0.canSubmit }
+      .distinctUntilChanged()
+      .bind(to: self.submitButtonItem.rx.isEnabled)
+      .disposed(by: self.disposeBag)
+
     self.submitButtonItem.rx.tap
       .map { Reactor.Action.submit }
       .bind(to: reactor.action)
@@ -248,9 +253,9 @@ final class PostEditorViewController: BaseViewController, View, FactoryModule {
       .disposed(by: self.disposeBag)
 
     self.textInputNode.rx.attributedText
-      .filterNil()
+      .map { $0?.string ?? "" }
       .distinctUntilChanged()
-      .map { Reactor.Action.setText($0.string) }
+      .map(Reactor.Action.setText)
       .bind(to: reactor.action)
       .disposed(by: self.disposeBag)
   }

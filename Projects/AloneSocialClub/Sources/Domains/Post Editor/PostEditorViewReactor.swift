@@ -41,6 +41,7 @@ final class PostEditorViewReactor: Reactor, FactoryModule, Hashable {
     let mode: Mode
     var image: UIImage?
     var text: String = ""
+    var canSubmit: Bool = false
     var isLoading: Bool = false
     var isSubmitted: Bool = false
     var errorMessage: String?
@@ -91,9 +92,11 @@ final class PostEditorViewReactor: Reactor, FactoryModule, Hashable {
     switch mutation {
     case let .setImage(image):
       newState.image = image
+      newState.canSubmit = self.canSubmit(from: newState)
 
     case let .setText(text):
       newState.text = text
+      newState.canSubmit = self.canSubmit(from: newState)
 
     case let .setLoading(isLoading):
       newState.isLoading = isLoading
@@ -105,5 +108,9 @@ final class PostEditorViewReactor: Reactor, FactoryModule, Hashable {
       newState.errorMessage = error.localizedDescription
     }
     return newState
+  }
+
+  private func canSubmit(from state: State) -> Bool {
+    return state.image != nil && !state.text.isEmpty
   }
 }
