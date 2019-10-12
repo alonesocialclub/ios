@@ -10,7 +10,7 @@ Work alone, together.
 
 ```console
 $ brew bundle
-$ brew install xcodegen
+$ bundle install
 $ make project
 ```
 
