@@ -40,6 +40,7 @@ final class FeedViewController: BaseViewController, View, FactoryModule {
   private let collectionNode = ASCollectionNode(collectionViewLayout: UICollectionViewFlowLayout()).then {
     $0.backgroundColor = .clear
     $0.alwaysBounceVertical = true
+    $0.showsVerticalScrollIndicator = false
   }
 
 
