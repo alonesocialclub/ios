@@ -37,7 +37,7 @@ final class PostEditorViewController: BaseViewController, View, FactoryModule {
       .color(.oc_gray6),
     ])
     static let text = StringStyle([
-      .font(.systemFont(ofSize: 18, weight: .regular)),
+      .font(.systemFont(ofSize: 16, weight: .regular)),
       .color(.oc_gray9),
     ])
     static let textPlaceholder = text.byAdding([
