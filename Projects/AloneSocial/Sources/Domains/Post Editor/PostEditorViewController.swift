@@ -52,6 +52,7 @@ final class PostEditorViewController: BaseViewController, View, FactoryModule {
 
   private let cancelButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: nil, action: nil)
   private let submitButtonItem = UIBarButtonItem(title: "Post", style: .done, target: nil, action: nil)
+  private let activityIndicatorButtonItem = ActivityIndicatorBarButtonItem(style: .gray)
 
   private let selectImageButtonNode = ASButtonNode().then {
     $0.imageNode.contentMode = .scaleAspectFill
@@ -99,6 +100,7 @@ final class PostEditorViewController: BaseViewController, View, FactoryModule {
     self.bindTitle(reactor: reactor)
     self.bindCancel(reactor: reactor)
     self.bindSubmit(reactor: reactor)
+    self.bindLoading(reactor: reactor)
     self.bindImageSelection(reactor: reactor)
     self.bindText(reactor: reactor)
   }
@@ -136,6 +138,30 @@ final class PostEditorViewController: BaseViewController, View, FactoryModule {
         self?.dismiss(animated: true, completion: nil)
       })
       .disposed(by: self.disposeBag)
+  }
+
+  private func bindLoading(reactor: PostEditorViewReactor) {
+    reactor.state.map { $0.isLoading }
+      .distinctUntilChanged()
+      .subscribe(onNext: { [weak self] isLoading in
+        guard let self = self else { return }
+        self.navigationItem.rightBarButtonItem = isLoading ? self.activityIndicatorButtonItem : self.submitButtonItem
+        self.activityIndicatorButtonItem.isAnimating = isLoading
+        self.setControlNodesEnabled(!isLoading)
+      })
+      .disposed(by: self.disposeBag)
+  }
+
+  private func setControlNodesEnabled(_ isEnabled: Bool) {
+    let allControlNodes: [ASDisplayNode] = [self.selectImageButtonNode, self.textInputNode]
+    for node in allControlNodes {
+      if let controlNode = node as? ASControlNode {
+        controlNode.isEnabled = isEnabled
+      } else {
+        node.isUserInteractionEnabled = isEnabled
+      }
+      node.alpha = isEnabled ? 1 : 0.5
+    }
   }
 
   private func bindImageSelection(reactor: PostEditorViewReactor) {

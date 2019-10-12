@@ -64,7 +64,11 @@ final class PostEditorViewReactor: Reactor, FactoryModule, Hashable {
       return Observable.just(Mutation.setText(text))
 
     case .submit:
-      return self.upload()
+      return Observable.concat([
+        Observable.just(Mutation.setLoading(true)),
+        self.upload(),
+        Observable.just(Mutation.setLoading(false)),
+      ])
     }
   }
 
