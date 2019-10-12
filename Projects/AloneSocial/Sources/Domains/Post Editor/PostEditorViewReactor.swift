@@ -11,6 +11,8 @@ import RxSwift
 
 final class PostEditorViewReactor: Reactor, FactoryModule, Hashable {
   struct Dependency {
+    let pictureService: PictureServiceProtocol
+    let postService: PostServiceProtocol
   }
 
   struct Payload {
@@ -24,24 +26,32 @@ final class PostEditorViewReactor: Reactor, FactoryModule, Hashable {
   enum Action {
     case setImage(UIImage)
     case setText(String)
-    case upload
+    case submit
   }
 
   enum Mutation {
     case setImage(UIImage)
     case setText(String)
+    case setLoading(Bool)
+    case setSubmitted
+    case setError(Error)
   }
 
   struct State: Hashable {
     let mode: Mode
     var image: UIImage?
     var text: String = ""
+    var isLoading: Bool = false
+    var isSubmitted: Bool = false
+    var errorMessage: String?
   }
 
+  private let dependency: Dependency
   let initialState: State
 
   init(dependency: Dependency, payload: Payload) {
     defer { _ = self.state }
+    self.dependency = dependency
     self.initialState = State(mode: payload.mode)
   }
 
@@ -53,9 +63,23 @@ final class PostEditorViewReactor: Reactor, FactoryModule, Hashable {
     case let .setText(text):
       return Observable.just(Mutation.setText(text))
 
-    case .upload:
-      return Observable.empty()
+    case .submit:
+      return self.upload()
     }
+  }
+
+  private func upload() -> Observable<Mutation> {
+    guard let image = self.currentState.image else { return .empty() }
+    let text = self.currentState.text
+
+    let dependency = self.dependency
+    return dependency.pictureService.upload(image: image)
+      .flatMap { picture in
+        dependency.postService.create(pictureID: picture.id, text: text)
+      }
+      .map { _ in Mutation.setSubmitted }
+      .catchError { error in .just(Mutation.setError(error)) }
+      .asObservable()
   }
 
   func reduce(state: State, mutation: Mutation) -> State {
@@ -66,6 +90,15 @@ final class PostEditorViewReactor: Reactor, FactoryModule, Hashable {
 
     case let .setText(text):
       newState.text = text
+
+    case let .setLoading(isLoading):
+      newState.isLoading = isLoading
+
+    case .setSubmitted:
+      newState.isSubmitted = true
+
+    case let .setError(error):
+      newState.errorMessage = error.localizedDescription
     }
     return newState
   }

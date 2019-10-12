@@ -46,6 +46,7 @@ private extension AppDependency {
     self.container.autoregister(AuthServiceProtocol.self, initializer: AuthService.init)
     self.container.autoregister(FeedServiceProtocol.self, initializer: FeedService.init)
     self.container.autoregister(PictureServiceProtocol.self, initializer: PictureService.init)
+    self.container.autoregister(PostServiceProtocol.self, initializer: PostService.init)
     self.container.autoregister(UserServiceProtocol.self, initializer: UserService.init)
   }
 }

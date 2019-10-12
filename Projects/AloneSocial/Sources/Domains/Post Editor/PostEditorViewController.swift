@@ -50,7 +50,8 @@ final class PostEditorViewController: BaseViewController, View, FactoryModule {
 
   // MARK: UI
 
-  private let uploadButtonItem = UIBarButtonItem(title: "Post", style: .done, target: nil, action: nil)
+  private let cancelButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: nil, action: nil)
+  private let submitButtonItem = UIBarButtonItem(title: "Post", style: .done, target: nil, action: nil)
 
   private let selectImageButtonNode = ASButtonNode().then {
     $0.imageNode.contentMode = .scaleAspectFill
@@ -87,7 +88,8 @@ final class PostEditorViewController: BaseViewController, View, FactoryModule {
   }
 
   private func configureNavigationItem() {
-    self.navigationItem.rightBarButtonItem = self.uploadButtonItem
+    self.navigationItem.leftBarButtonItem = self.cancelButtonItem
+    self.navigationItem.rightBarButtonItem = self.submitButtonItem
   }
 
 
@@ -95,6 +97,7 @@ final class PostEditorViewController: BaseViewController, View, FactoryModule {
 
   func bind(reactor: PostEditorViewReactor) {
     self.bindTitle(reactor: reactor)
+    self.bindSubmit(reactor: reactor)
     self.bindImageSelection(reactor: reactor)
     self.bindText(reactor: reactor)
   }
@@ -108,6 +111,21 @@ final class PostEditorViewController: BaseViewController, View, FactoryModule {
         }
       }
       .bind(to: self.rx.title)
+      .disposed(by: self.disposeBag)
+  }
+
+  private func bindSubmit(reactor: PostEditorViewReactor) {
+    self.submitButtonItem.rx.tap
+      .map { Reactor.Action.submit }
+      .bind(to: reactor.action)
+      .disposed(by: self.disposeBag)
+
+    reactor.state.map { $0.isSubmitted }
+      .distinctUntilChanged()
+      .filter { $0 == true }
+      .subscribe(onNext: { [weak self] _ in
+        self?.dismiss(animated: true, completion: nil)
+      })
       .disposed(by: self.disposeBag)
   }
 
