@@ -25,7 +25,7 @@ extension UIImage {
   }
 
   private func needsResize() -> Bool {
-    return self.size.width > Self.maximumResolution && self.size.height > Self.maximumResolution
+    return self.size.width > Self.maximumResolution || self.size.height > Self.maximumResolution
   }
 
   private func scaledSize() -> CGSize {
