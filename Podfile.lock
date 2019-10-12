@@ -81,6 +81,7 @@ PODS:
     - RxSwift (~> 5.0)
   - SteviaLayout (4.6.0)
   - Stubber (1.4.0)
+  - SwiftLint (0.35.0)
   - SwiftyColor (1.2.0)
   - SwiftyImage (1.5.1)
   - Swinject (2.7.1)
@@ -137,6 +138,7 @@ DEPENDENCIES:
   - RxSwift
   - RxViewController
   - Stubber
+  - SwiftLint
   - SwiftyColor
   - SwiftyImage
   - Swinject
@@ -176,6 +178,7 @@ SPEC REPOS:
     - RxViewController
     - SteviaLayout
     - Stubber
+    - SwiftLint
     - SwiftyColor
     - SwiftyImage
     - Swinject
@@ -214,6 +217,7 @@ SPEC CHECKSUMS:
   RxViewController: 7330a46e5c31cd680db169da4c9fc8676e975a81
   SteviaLayout: b1b56a932f7e199a963a8cf59de2f766a3112d58
   Stubber: 241303d241ad91f70d6d6d20cdaeae5255c82b57
+  SwiftLint: 5553187048b900c91aa03552807681bb6b027846
   SwiftyColor: ac23e6c0b561838c1ef0f554ff170cceba14546b
   SwiftyImage: 88a8c90ee3963a498de728c4ccdb079b4820cef0
   Swinject: ddf78b8486dd9b71a667b852cad919ab4484478e
@@ -223,6 +227,6 @@ SPEC CHECKSUMS:
   URLNavigator: 0bffc3efdeb2d97f7b5eec7ac82d290f4a099431
   YPImagePicker: bdaa46782668e260fdd9709f19043a9f469fd2ad
 
-PODFILE CHECKSUM: 5e40958ef7f31c09a6a69af1ba197c6eb4fd3870
+PODFILE CHECKSUM: 9c793e72dabfbe78d6212bc0f1603918104812d9
 
 COCOAPODS: 1.8.3

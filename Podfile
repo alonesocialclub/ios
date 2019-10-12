@@ -45,6 +45,7 @@ target 'AloneSocialClub' do
   pod 'KeychainAccess'
   pod 'URLNavigator'
   pod 'CGFloatLiteral'
+  pod 'SwiftLint'
 
   target 'AloneSocialClubTests' do
     inherit! :search_paths

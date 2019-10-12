@@ -11,6 +11,13 @@ targets:
       - sdk: UIKit.framework
     attributes:
       ProvisioningStyle: Manual
+    preBuildScripts:
+    - name: SwiftLint
+      script: |
+        [[ -z "${GITHUB_WORKFLOW}" ]] || \
+          ${PODS_ROOT}/SwiftLint/swiftlint lint \
+            --config "${SRCROOT}/.swiftlint.yml" \
+            --path "${SRCROOT}/Projects/AloneSocialClub"
     settings:
       base:
         PRODUCT_NAME: AloneSocialClub
