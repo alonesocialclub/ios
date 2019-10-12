@@ -60,9 +60,7 @@ final class JoinViewController: BaseViewController, View, FactoryModule {
   }
   private let nameInputNode = ASEditableTextNode().then {
     $0.attributedPlaceholderText = "Your name".styled(with: Typo.placeholder)
-    $0.typingAttributes = Typo.name.attributes.reduce(into: [:]) { result, attribute in
-      result[attribute.key.rawValue] = attribute.value
-    }
+    $0.typingAttributes = Typo.name.rawAttributes
   }
   private let joinButtonNode = ASButtonNode().then {
     $0.setAttributedTitle("Next".styled(with: Typo.joinButton), for: .normal)
