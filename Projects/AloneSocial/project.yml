@@ -13,6 +13,7 @@ targets:
       PRODUCT_NAME: AloneSocial
       PRODUCT_BUNDLE_IDENTIFIER: com.alonesocial.ios
       INFOPLIST_FILE: "$(SRCROOT)/Projects/AloneSocial/Supporting Files/Info.plist"
+      TARGETED_DEVICE_FAMILY: 1
 
   AloneSocialTests:
     templates: [UnitTest]
