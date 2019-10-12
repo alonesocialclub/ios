@@ -14,7 +14,7 @@ default_platform(:ios)
 
 platform :ios do
   desc "Push a new beta build to TestFlight"
-  lane :beta do
+  lane :testflight do
     make_project
     build_app(workspace: "AloneSocialClub.xcworkspace", scheme: "AloneSocialClub")
     upload_to_testflight

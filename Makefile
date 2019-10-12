@@ -2,5 +2,5 @@ project:
 	xcodegen generate
 	bundle exec pod install
 
-beta:
-	bundle exec fastlane beta --verbose
+testflight:
+	bundle exec fastlane testflight --verbose
