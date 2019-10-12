@@ -12,6 +12,7 @@ import RxSwift
 final class FeedViewReactor: Reactor, FactoryModule {
   struct Dependency {
     let feedService: FeedServiceProtocol
+    let postService: PostServiceProtocol
   }
 
   enum Action {
@@ -21,6 +22,7 @@ final class FeedViewReactor: Reactor, FactoryModule {
   enum Mutation {
     case setRefreshing(Bool)
     case setFeed(Feed)
+    case prependPost(Post)
     case updateSections
   }
 
@@ -59,6 +61,22 @@ final class FeedViewReactor: Reactor, FactoryModule {
       .catchError { _ in .empty() }
   }
 
+  func transform(mutation: Observable<Mutation>) -> Observable<Mutation> {
+    return Observable.merge(mutation, self.postServiceMutation())
+  }
+
+  private func postServiceMutation() -> Observable<Mutation> {
+    return self.dependency.postService.event.flatMap { event -> Observable<Mutation> in
+      switch event {
+      case let .create(post):
+        return Observable.concat([
+          Observable.just(Mutation.prependPost(post)),
+          Observable.just(Mutation.updateSections),
+        ])
+      }
+    }
+  }
+
   func reduce(state: State, mutation: Mutation) -> State {
     var newState = state
 
@@ -68,6 +86,9 @@ final class FeedViewReactor: Reactor, FactoryModule {
 
     case let .setFeed(feed):
       newState.posts = feed.posts
+
+    case let .prependPost(post):
+      newState.posts.insert(post, at: 0)
 
     case .updateSections:
       newState.sections.removeAll()

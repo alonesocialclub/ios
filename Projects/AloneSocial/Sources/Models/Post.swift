@@ -11,3 +11,9 @@ struct Post: Decodable, Hashable {
   var picture: Picture
   var author: User
 }
+
+extension Post {
+  enum Event {
+    case create(Post)
+  }
+}
