@@ -41,7 +41,9 @@ final class FeedViewTitleCellNode: ASCellNode, FactoryModule {
 
   // MARK: UI
 
-  private let titleNode = ASTextNode()
+  private let titleNode = ASTextNode().then {
+    $0.attributedText = "Alone\nSocial\nClub".styled(with: Typo.title)
+  }
   private let uploadButtonNode = ASButtonNode().then {
     $0.setImage(Image.uploadButtonForegroundImage(), for: .normal)
     $0.setBackgroundImage(Image.uploadButtonBackgroundImage(color: .oc_blue5), for: .normal)
@@ -82,7 +84,6 @@ final class FeedViewTitleCellNode: ASCellNode, FactoryModule {
     self.dependency = dependency
     super.init()
     self.automaticallyManagesSubnodes = true
-    self.titleNode.attributedText = "Alone\nSocial\nClub".styled(with: Typo.title)
     self.uploadButtonNode.addTarget(self, action: #selector(uploadButtonNodeDidTap), forControlEvents: .touchUpInside)
   }
 

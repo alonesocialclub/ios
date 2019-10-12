@@ -8,6 +8,7 @@
 import AsyncDisplayKit
 import UIKit
 
+import BonMot
 import Pure
 import ReactorKit
 import RxSwift
@@ -26,6 +27,16 @@ final class SplashViewController: BaseViewController, View, FactoryModule {
   }
 
 
+  // MARK: Constants
+
+  private struct Typo {
+    static let title = StringStyle([
+      .font(.systemFont(ofSize: 48, weight: .bold)),
+      .color(.oc_gray9),
+    ])
+  }
+
+
   // MARK: Properties
 
   private let dependency: Dependency
@@ -33,6 +44,9 @@ final class SplashViewController: BaseViewController, View, FactoryModule {
 
   // MARK: UI
 
+  private let titleNode = ASTextNode().then {
+    $0.attributedText = "Alone\nSocial\nClub".styled(with: Typo.title)
+  }
   private let activityIndicatorNode = ActivityIndicatorNode(style: .gray)
 
 
@@ -87,6 +101,12 @@ final class SplashViewController: BaseViewController, View, FactoryModule {
   // MARK: Layout
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-    return ASCenterLayoutSpec(centeringOptions: .XY, sizingOptions: .minimumXY, child: self.activityIndicatorNode)
+    return ASAbsoluteLayoutSpec(children: [
+      ASInsetLayoutSpec(
+        insets: UIEdgeInsets(top: self.node.safeAreaInsets.top + 20, left: 20, right: 20),
+        child: self.titleNode
+      ),
+      ASCenterLayoutSpec(centeringOptions: .XY, sizingOptions: .minimumXY, child: self.activityIndicatorNode)
+    ])
   }
 }

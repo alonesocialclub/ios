@@ -28,7 +28,7 @@ final class FeedViewReactor: Reactor, FactoryModule {
 
   struct State {
     var isRefreshing: Bool = false
-    var sections: [FeedViewSection] = []
+    var sections: [FeedViewSection] = [FeedViewSection(identity: .title, items: [.title])]
 
     fileprivate var posts: [Post] = []
   }
