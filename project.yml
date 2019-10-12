@@ -14,7 +14,6 @@ settings:
     SWIFT_VERSION: 5.1
     CLANG_ENABLE_MODULES: YES
     COPY_PHASE_STRIP: NO
-    DEVELOPMENT_TEAM: N2C267LBVY
 
   configs:
     debug:

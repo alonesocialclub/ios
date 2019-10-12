@@ -9,13 +9,23 @@ targets:
     dependencies:
       - sdk: Foundation.framework
       - sdk: UIKit.framework
+    attributes:
+      ProvisioningStyle: Manual
     settings:
-      PRODUCT_NAME: AloneSocialClub
-      PRODUCT_BUNDLE_IDENTIFIER: com.alonesocialclub.ios
-      MARKETING_VERSION: 0.1.0
-      CURRENT_PROJECT_VERSION: 1
-      INFOPLIST_FILE: "$(SRCROOT)/Projects/AloneSocialClub/Supporting Files/Info.plist"
-      TARGETED_DEVICE_FAMILY: 1
+      base:
+        PRODUCT_NAME: AloneSocialClub
+        PRODUCT_BUNDLE_IDENTIFIER: com.alonesocialclub.ios
+        MARKETING_VERSION: 0.1.0
+        CURRENT_PROJECT_VERSION: 1
+        INFOPLIST_FILE: "$(SRCROOT)/Projects/AloneSocialClub/Supporting Files/Info.plist"
+        TARGETED_DEVICE_FAMILY: 1
+        DEVELOPMENT_TEAM: N2C267LBVY
+        PROVISIONING_PROFILE_SPECIFIER: Alone Social Club App Store
+      configs:
+        debug:
+          CODE_SIGN_IDENTITY: Apple Developer
+        release:
+          CODE_SIGN_IDENTITY: Apple Distribution
 
   AloneSocialClubTests:
     templates: [UnitTest]
