@@ -7,7 +7,7 @@
 
 import MoyaSugar
 
-protocol BaseAPI: SugarTargetType {
+protocol BaseAPI: SugarTargetType, Hashable {
 }
 
 extension BaseAPI {
