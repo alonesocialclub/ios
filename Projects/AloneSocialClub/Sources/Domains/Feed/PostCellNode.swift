@@ -103,7 +103,11 @@ private final class PostContentNode: ASDisplayNode {
 
   private func configure(post: Post) {
     self.imageNode.setImage(with: post.picture)
-    self.avatarNode.setImage(with: post.author.profile.picture)
+    if let avatarPicture = post.author.profile.picture {
+      self.avatarNode.setImage(with: avatarPicture)
+    } else {
+      self.avatarNode.image = UIImage.emptyAvatar
+    }
     self.textNode.attributedText = post.text.styled(with: Typo.text)
   }
 
