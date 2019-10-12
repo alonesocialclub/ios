@@ -16,8 +16,8 @@ target 'AloneSocial' do
   # Networking
   pod 'Moya', '14.0.0-beta.4'
   pod 'Moya/RxSwift', '14.0.0-beta.4'
-  pod 'MoyaSugar', '1.3.1'
-  pod 'MoyaSugar/RxSwift', '1.3.1'
+  pod 'MoyaSugar', '1.3.2'
+  pod 'MoyaSugar/RxSwift', '1.3.2'
 
   # Rx
   pod 'RxSwift'
