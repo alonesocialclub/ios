@@ -29,6 +29,7 @@ target 'AloneSocialClub' do
   pod 'RxOptional'
   pod 'RxViewController'
   pod 'RxCodable'
+  pod 'RxKeyboard'
 
   # UI
   pod 'BonMot'

@@ -11,6 +11,7 @@ import AsyncDisplayKit
 import BonMot
 import Pure
 import ReactorKit
+import RxKeyboard
 import RxSwift
 import URLNavigator
 import YPImagePicker
@@ -54,6 +55,10 @@ final class PostEditorViewController: BaseViewController, View, FactoryModule {
   private let submitButtonItem = UIBarButtonItem(title: "Post", style: .done, target: nil, action: nil)
   private let activityIndicatorButtonItem = ActivityIndicatorBarButtonItem(style: .gray)
 
+  private let scrollNode = ASScrollNode().then {
+    $0.automaticallyManagesSubnodes = true
+    $0.automaticallyManagesContentSize = true
+  }
   private let selectImageButtonNode = ASButtonNode().then {
     $0.imageNode.contentMode = .scaleAspectFill
     $0.setAttributedTitle("Pick an image...".styled(with: Typo.selectImageButtonTitle), for: .normal)
@@ -65,6 +70,7 @@ final class PostEditorViewController: BaseViewController, View, FactoryModule {
     $0.typingAttributes = Typo.text.rawAttributes
     $0.attributedPlaceholderText = "Tell people where you at and what you're gonna do today.".styled(with: Typo.textPlaceholder)
     $0.textContainerInset = UIEdgeInsets(all: 15)
+    $0.scrollEnabled = false
   }
 
 
@@ -73,6 +79,10 @@ final class PostEditorViewController: BaseViewController, View, FactoryModule {
   init(dependency: Dependency, payload: Payload) {
     defer { self.reactor = payload.reactor }
     super.init()
+
+    self.scrollNode.layoutSpecBlock = { [weak self] node, constrainedSize in
+      return self?.scrollNodeLayoutSpecThatFits(constrainedSize) ?? ASLayoutSpec()
+    }
 
     self.preventFromModalGestureDismissal()
     self.configureNavigationItem()
@@ -94,6 +104,14 @@ final class PostEditorViewController: BaseViewController, View, FactoryModule {
   }
 
 
+  // MARK: View Life Cycle
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    self.scrollNode.view.keyboardDismissMode = .interactive
+  }
+
+
   // MARK: Binding
 
   func bind(reactor: PostEditorViewReactor) {
@@ -103,6 +121,7 @@ final class PostEditorViewController: BaseViewController, View, FactoryModule {
     self.bindLoading(reactor: reactor)
     self.bindImageSelection(reactor: reactor)
     self.bindText(reactor: reactor)
+    self.bindScroll()
   }
 
   private func bindTitle(reactor: PostEditorViewReactor) {
@@ -236,11 +255,48 @@ final class PostEditorViewController: BaseViewController, View, FactoryModule {
       .disposed(by: self.disposeBag)
   }
 
+  private func bindScroll() {
+    self.textInputNode.rx.attributedText
+      .subscribe(onNext: { [weak self] _ in
+        self?.scrollToTextNodeCaret()
+      })
+      .disposed(by: self.disposeBag)
+
+    RxKeyboard.instance.visibleHeight
+      .drive(onNext: { [weak self] visibleHeight in
+        self?.adjustScrollViewBottomInset(visibleKeyboardHeight: visibleHeight)
+      })
+      .disposed(by: self.disposeBag)
+  }
+
+  private func scrollToTextNodeCaret() {
+    guard self.textInputNode.isNodeLoaded else { return }
+
+    guard let selectedTextRange = self.textInputNode.textView.selectedTextRange else { return }
+    let caretRect = self.textInputNode.textView.caretRect(for: selectedTextRange.start)
+    let rect = self.scrollNode.view.convert(caretRect, from: self.textInputNode.textView)
+    self.scrollNode.view.scrollRectToVisible(rect, animated: true)
+  }
+
+  private func adjustScrollViewBottomInset(visibleKeyboardHeight: CGFloat) {
+    guard self.node.isNodeLoaded else { return }
+
+    let bottomInset = max(0, visibleKeyboardHeight - self.node.safeAreaInsets.bottom)
+    self.scrollNode.view.contentInset.bottom = bottomInset
+    self.scrollNode.view.scrollIndicatorInsets.bottom = bottomInset
+
+    self.scrollToTextNodeCaret()
+  }
+
 
   // MARK: Layout
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-    let content = ASStackLayoutSpec(
+    return ASWrapperLayoutSpec(layoutElement: self.scrollNode)
+  }
+
+  private func scrollNodeLayoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    return ASStackLayoutSpec(
       direction: .vertical,
       spacing: 0,
       justifyContent: .start,
@@ -248,11 +304,10 @@ final class PostEditorViewController: BaseViewController, View, FactoryModule {
       children: [
         self.selectImageButtonLayout(),
         self.textInputNode.styled {
-          $0.flexGrow = 1
+          $0.minHeight = ASDimensionMake(200)
         },
       ]
     )
-    return ASInsetLayoutSpec(insets: self.node.safeAreaInsets, child: content)
   }
 
   private func selectImageButtonLayout() -> ASLayoutElement {

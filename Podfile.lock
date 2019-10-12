@@ -67,6 +67,9 @@ PODS:
     - RxCocoa (~> 5.0)
     - RxSwift (~> 5.0)
     - Texture (>= 2.7)
+  - RxKeyboard (1.0.0):
+    - RxCocoa (~> 5.0)
+    - RxSwift (~> 5.0)
   - RxOptional (4.0.0):
     - RxCocoa (~> 5)
     - RxSwift (~> 5)
@@ -128,6 +131,7 @@ DEPENDENCIES:
   - RxCodable
   - RxDataSources
   - RxDataSources-Texture
+  - RxKeyboard
   - RxOptional
   - RxRelay
   - RxSwift
@@ -165,6 +169,7 @@ SPEC REPOS:
     - RxCodable
     - RxDataSources
     - RxDataSources-Texture
+    - RxKeyboard
     - RxOptional
     - RxRelay
     - RxSwift
@@ -202,6 +207,7 @@ SPEC CHECKSUMS:
   RxCodable: 468b37793b66d804a5b1be16e817d7aab408b52b
   RxDataSources: efee07fa4de48477eca0a4611e6d11e2da9c1114
   RxDataSources-Texture: 3606ddbd1b03773d02c8d03bda74fc5f171d6c0f
+  RxKeyboard: 6683c4344304a00f943c158bd8a43ce5469c82a7
   RxOptional: 9904e2219d59260c3c171273d475b2126de187e8
   RxRelay: 4f7409406a51a55cd88483f21ed898c234d60f18
   RxSwift: 8b0671caa829a763bbce7271095859121cbd895f
@@ -217,6 +223,6 @@ SPEC CHECKSUMS:
   URLNavigator: 0bffc3efdeb2d97f7b5eec7ac82d290f4a099431
   YPImagePicker: bdaa46782668e260fdd9709f19043a9f469fd2ad
 
-PODFILE CHECKSUM: a1405f3838512e3c6f6d6b1e6d3134d45c3666e1
+PODFILE CHECKSUM: 5e40958ef7f31c09a6a69af1ba197c6eb4fd3870
 
 COCOAPODS: 1.8.3
