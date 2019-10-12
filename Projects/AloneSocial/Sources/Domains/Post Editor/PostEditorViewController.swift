@@ -97,6 +97,7 @@ final class PostEditorViewController: BaseViewController, View, FactoryModule {
 
   func bind(reactor: PostEditorViewReactor) {
     self.bindTitle(reactor: reactor)
+    self.bindCancel(reactor: reactor)
     self.bindSubmit(reactor: reactor)
     self.bindImageSelection(reactor: reactor)
     self.bindText(reactor: reactor)
@@ -111,6 +112,14 @@ final class PostEditorViewController: BaseViewController, View, FactoryModule {
         }
       }
       .bind(to: self.rx.title)
+      .disposed(by: self.disposeBag)
+  }
+
+  private func bindCancel(reactor: PostEditorViewReactor) {
+    self.cancelButtonItem.rx.tap
+      .subscribe(onNext: { [weak self] in
+        self?.dismiss(animated: true, completion: nil)
+      })
       .disposed(by: self.disposeBag)
   }
 
