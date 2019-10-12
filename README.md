@@ -18,16 +18,25 @@ Then open the generated **AloneSocialClub.xcworkspace** with Xcode.
 
 ## Distribution
 
+### Bumping version
+
+Change `MARKETING_VERSION` and `CURRENT_PROJECT_VERSION` in [**project.yml**](Projects/AloneSocialClub/project.yml) file.
+
+```yml
+MARKETING_VERSION: 0.1.0
+CURRENT_PROJECT_VERSION: 1
+```
+
+### Uploading to App Store Connect
+
 It is recommended to execute those commands in background using such like `screen` to prevent from terminating by mistake.
 
-### TestFlight
+* **TestFlight**:
+  ```console
+  $ make testflight
+  ```
 
-```console
-$ make testflight
-```
-
-### App Store
-
-```console
-$ make appstore
-```
+* **App Store**:
+  ```console
+  $ make appstore
+  ```
