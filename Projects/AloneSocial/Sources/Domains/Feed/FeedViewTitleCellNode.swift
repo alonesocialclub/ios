@@ -105,14 +105,21 @@ final class FeedViewTitleCellNode: ASCellNode, FactoryModule {
       alignItems: .start,
       children: [
         self.titleNode,
-        self.uploadButtonNode.styled {
-          $0.preferredSize.width = Metric.uploadButtonSize
-          $0.preferredSize.height = Metric.uploadButtonSize
-        }
+        self.uploadButtonLayout(),
       ]
     ).styled {
       $0.preferredLayoutSize.width = ASDimensionMake("100%")
     }
     return ASInsetLayoutSpec(insets: UIEdgeInsets(left: 20, right: 20), child: content)
+  }
+
+  private func uploadButtonLayout() -> ASLayoutElement {
+    return ASInsetLayoutSpec(
+      insets: UIEdgeInsets(top: 10),
+      child: self.uploadButtonNode.styled {
+        $0.preferredSize.width = Metric.uploadButtonSize
+        $0.preferredSize.height = Metric.uploadButtonSize
+      }
+    )
   }
 }
