@@ -1,4 +1,4 @@
-name: AloneSocial
+name: AloneSocialClub
 options:
   bundleIdPrefix: com.alonesocialcom
   deploymentTarget:
@@ -31,12 +31,12 @@ schemes:
   AllTests:
     build:
       targets:
-        AloneSocial: test
+        AloneSocialClub: test
     test:
       gatherCoverageData: true
       targets:
-        - AloneSocialTests
+        - AloneSocialClubTests
 
 include:
   - Projects/templates.yml
-  - Projects/AloneSocial/project.yml
+  - Projects/AloneSocialClub/project.yml

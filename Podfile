@@ -3,7 +3,7 @@ platform :ios, '12.0'
 inhibit_all_warnings!
 use_frameworks!
 
-target 'AloneSocial' do
+target 'AloneSocialClub' do
   pod 'ReactorKit'
   pod 'Texture'
 
@@ -45,7 +45,7 @@ target 'AloneSocial' do
   pod 'URLNavigator'
   pod 'CGFloatLiteral'
 
-  target 'AloneSocialTests' do
+  target 'AloneSocialClubTests' do
     inherit! :search_paths
 
     pod 'Quick'

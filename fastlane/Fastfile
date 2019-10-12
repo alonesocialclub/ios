@@ -16,7 +16,7 @@ platform :ios do
   desc "Push a new beta build to TestFlight"
   lane :beta do
     make_project
-    build_app(workspace: "AloneSocial.xcworkspace", scheme: "AloneSocial")
+    build_app(workspace: "AloneSocialClub.xcworkspace", scheme: "AloneSocialClub")
     upload_to_testflight
   end
 end

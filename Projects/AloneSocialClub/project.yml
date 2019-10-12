@@ -1,0 +1,36 @@
+targets:
+  AloneSocialClub:
+    type: application
+    platform: iOS
+    sources:
+      - path: Sources
+      - path: Resources
+      - path: Supporting Files
+    dependencies:
+      - sdk: Foundation.framework
+      - sdk: UIKit.framework
+    settings:
+      PRODUCT_NAME: AloneSocialClub
+      PRODUCT_BUNDLE_IDENTIFIER: com.alonesocialclub.ios
+      MARKETING_VERSION: 0.1.0
+      CURRENT_PROJECT_VERSION: 1
+      INFOPLIST_FILE: "$(SRCROOT)/Projects/AloneSocialClub/Supporting Files/Info.plist"
+      TARGETED_DEVICE_FAMILY: 1
+
+  AloneSocialClubTests:
+    templates: [UnitTest]
+    templateAttributes:
+      testTarget: AloneSocialClub
+
+schemes:
+  AloneSocialClub:
+    build:
+      targets:
+        AloneSocialClub: all
+        AloneSocialClubTests: [test]
+    run:
+      environmentVariables:
+        OS_ACTIVITY_MODE: disable
+    test:
+      gatherCoverageData: true
+      targets: [AloneSocialClubTests]
