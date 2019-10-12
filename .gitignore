@@ -1,5 +1,7 @@
 *.xcodeproj
 *.xcworkspace
+*.ipa
+*.dSYM.zip
 build
 Pods/
 fastlane/README.md
