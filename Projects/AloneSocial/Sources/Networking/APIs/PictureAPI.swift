@@ -29,7 +29,7 @@ extension PictureAPI {
   var task: Task {
     switch self {
     case let .upload(image):
-      return Task.uploadMultipart(["file": image].asMultipartFormData())
+      return Task.uploadMultipart(["file": image.optimizedForUpload()].asMultipartFormData())
     }
   }
 }
