@@ -73,11 +73,11 @@ final class FeedViewReactor: Reactor, FactoryModule {
       newState.sections.removeAll()
       defer { newState.sections.removeDuplicates() }
 
-      newState.sections.append(FeedViewSection(items: [.title]))
+      newState.sections.append(FeedViewSection(identity: .title, items: [.title]))
 
       if !newState.posts.isEmpty {
         let items = newState.posts.map(FeedViewSection.Item.post)
-        let section = FeedViewSection(items: items)
+        let section = FeedViewSection(identity: .feed, items: items)
         newState.sections.append(section)
       }
     }

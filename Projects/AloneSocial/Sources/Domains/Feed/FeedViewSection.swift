@@ -8,17 +8,18 @@
 import RxDataSources_Texture
 
 struct FeedViewSection: Equatable {
-  var items: [Item]
+  enum Identity: String {
+    case title
+    case feed
+  }
+
+  let identity: Identity
+  let items: [Item]
 }
 
 extension FeedViewSection: AnimatableSectionModelType {
-  var identity: String {
-    return "FeedViewSection"
-  }
-
   init(original: FeedViewSection, items: [Item]) {
-    self = original
-    self.items = items
+    self = FeedViewSection(identity: original.identity, items: items)
   }
 }
 
