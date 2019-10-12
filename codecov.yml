@@ -1,0 +1,9 @@
+ignore:
+  - "**/*/Tests"
+  - "**/*/Supporting Files"
+
+coverage:
+  status:
+    project: no
+    patch: no
+    changes: no
