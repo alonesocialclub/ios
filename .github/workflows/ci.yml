@@ -1,0 +1,63 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+      - develop
+      - epic/*
+      - release/*
+      - hotfix/*
+  pull_request:
+
+jobs:
+  build:
+    runs-on: macOS-latest
+    env:
+      PROJECT: AloneSocialClub.xcodeproj
+      WORKSPACE: AloneSocialClub.xcworkspace
+      SCHEME: AloneSocialClub
+      DEVICE: iPhone 11 Pro
+
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Select Xcode
+      run: sudo xcode-select -s /Applications/Xcode_11.app
+
+    - name: Install XcodeGen
+      run: brew bundle
+
+    - name: Install Ruby Dependencies
+      run: bundle install
+
+    - name: Generate Xcode Project
+      run: make project
+
+    - name: Build and Test
+      run: |
+        set -o pipefail && bundle exec fastlane scan \
+          --clean \
+          --skip_build \
+          --workspace "$WORKSPACE" \
+          --scheme "$SCHEME" \
+          --device "$DEVICE" \
+          --config Debug \
+          --output_style rspec
+
+    - name: Upload Code Coverage
+      run: |
+        bundle exec slather coverage \
+          --workspace "$WORKSPACE" \
+          --scheme "$SCHEME" \
+          --ignore "Pods/**/*" \
+          --cobertura-xml \
+          "$PROJECT"
+        bash <(curl -s https://codecov.io/bash) \
+          -f cobertura.xml \
+          -X coveragepy \
+          -X gcov \
+          -X xcode \
+          -t "$CODECOV_TOKEN"
+      env:
+        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
