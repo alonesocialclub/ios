@@ -102,8 +102,8 @@ private final class PostContentNode: ASDisplayNode {
   }
 
   private func configure(post: Post) {
-    self.imageNode.url = URL(string: "https://alone.social/img/IMG_1525.png")
-    self.avatarNode.url = URL(string: "https://alone.social/img/profile/sy.jpg")
+    self.imageNode.setImage(with: post.picture)
+    self.avatarNode.setImage(with: post.author.profile.picture)
     self.textNode.attributedText = post.text.styled(with: Typo.text)
   }
 

@@ -13,5 +13,6 @@ struct User: Decodable, Hashable {
 extension User {
   struct Profile: Decodable, Hashable {
     var name: String
+    var picture: Picture?
   }
 }

@@ -9,6 +9,7 @@ import MoyaSugar
 
 enum PictureAPI: BaseAPI {
   case upload(UIImage)
+  case image(pictureID: String)
 }
 
 extension PictureAPI {
@@ -16,6 +17,9 @@ extension PictureAPI {
     switch self {
     case .upload:
       return .post("/pictures")
+
+    case let .image(pictureID):
+      return .get("/pictures/\(pictureID)/image/original")
     }
   }
 
@@ -30,6 +34,9 @@ extension PictureAPI {
     switch self {
     case let .upload(image):
       return Task.uploadMultipart(["file": image.optimizedForUpload()].asMultipartFormData())
+
+    default:
+      return Task.requestPlain
     }
   }
 }

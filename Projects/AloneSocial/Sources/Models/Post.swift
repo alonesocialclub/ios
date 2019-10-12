@@ -8,4 +8,6 @@
 struct Post: Decodable, Hashable {
   var id: String
   var text: String
+  var picture: Picture
+  var author: User
 }
