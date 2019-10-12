@@ -35,6 +35,13 @@ final class PostEditorViewController: BaseViewController, View, FactoryModule {
       .font(.systemFont(ofSize: 24, weight: .bold)),
       .color(.oc_gray6),
     ])
+    static let text = StringStyle([
+      .font(.systemFont(ofSize: 18, weight: .regular)),
+      .color(.oc_gray9),
+    ])
+    static let textPlaceholder = text.byAdding([
+      .color(.as_textPlaceholder),
+    ])
   }
 
 
@@ -51,6 +58,11 @@ final class PostEditorViewController: BaseViewController, View, FactoryModule {
     $0.setAttributedTitle(NSAttributedString(), for: .selected)
     $0.setBackgroundImage(UIImage.resizable().color(.oc_gray2).image, for: .normal)
     $0.setBackgroundImage(UIImage.resizable().color(.oc_gray3).image, for: .highlighted)
+  }
+  private let textInputNode = ASEditableTextNode().then {
+    $0.typingAttributes = Typo.text.rawAttributes
+    $0.attributedPlaceholderText = "Tell people where you at and what you're gonna do today.".styled(with: Typo.textPlaceholder)
+    $0.textContainerInset = UIEdgeInsets(all: 15)
   }
 
 
@@ -84,6 +96,7 @@ final class PostEditorViewController: BaseViewController, View, FactoryModule {
   func bind(reactor: PostEditorViewReactor) {
     self.bindTitle(reactor: reactor)
     self.bindImageSelection(reactor: reactor)
+    self.bindText(reactor: reactor)
   }
 
   private func bindTitle(reactor: PostEditorViewReactor) {
@@ -156,6 +169,20 @@ final class PostEditorViewController: BaseViewController, View, FactoryModule {
     }.first
   }
 
+  private func bindText(reactor: PostEditorViewReactor) {
+    reactor.state.map { $0.text }
+      .distinctUntilChanged()
+      .bind(to: self.textInputNode.rx.text(Typo.text.attributes))
+      .disposed(by: self.disposeBag)
+
+    self.textInputNode.rx.attributedText
+      .filterNil()
+      .distinctUntilChanged()
+      .map { Reactor.Action.setText($0.string) }
+      .bind(to: reactor.action)
+      .disposed(by: self.disposeBag)
+  }
+
 
   // MARK: Layout
 
@@ -167,6 +194,9 @@ final class PostEditorViewController: BaseViewController, View, FactoryModule {
       alignItems: .stretch,
       children: [
         self.selectImageButtonLayout(),
+        self.textInputNode.styled {
+          $0.flexGrow = 1
+        },
       ]
     )
     return ASInsetLayoutSpec(insets: self.node.safeAreaInsets, child: content)

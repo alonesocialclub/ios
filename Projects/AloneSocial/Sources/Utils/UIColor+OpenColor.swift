@@ -9,6 +9,7 @@ import UIKit
 
 extension UIColor {
   static let as_placeholder: UIColor = oc_gray2
+  static let as_textPlaceholder: UIColor = oc_gray4
 }
 
 extension UIColor {
