@@ -1,5 +1,9 @@
 # Alone Social Club
 
+[![App Store](https://img.shields.io/itunes/v/1483344112.svg?label=app%20store)](https://itunes.apple.com/kr/app/alonesocialclub/id1483344112)
+[![CI](https://github.com/alonesocialclub/ios/workflows/CI/badge.svg)](https://github.com/alonesocialclub/ios/actions)
+[![codecov](https://codecov.io/gh/alonesocialclub/ios/branch/master/graph/badge.svg)](https://codecov.io/gh/alonesocialclub/ios)
+
 Work alone, together.
 
 ## Development
