@@ -53,6 +53,7 @@ final class AppleAuthService: AppleAuthServiceProtocol {
 struct AppleIDCredential: Hashable {
   let userIdentifier: String
   let authorizationCode: String
+  let displayName: String
 }
 
 enum AppleIDAuthorizationError: Error, Hashable {
@@ -76,11 +77,23 @@ private final class AuthorizationControllerDelegateObject: NSObject, ASAuthoriza
     }
     self.resultRelay.accept(.success(AppleIDCredential(
       userIdentifier: credential.user,
-      authorizationCode: authorizationCode
+      authorizationCode: authorizationCode,
+      displayName: credential.fullName?.displayName ?? ""
     )))
   }
 
   func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
     self.resultRelay.accept(.failure(error))
+  }
+}
+
+private extension PersonNameComponents {
+  var displayName: String {
+    let components: [String?] = [
+      self.givenName,
+      self.middleName,
+      self.familyName,
+    ]
+    return components.compactMap { $0 }.joined(separator: " ")
   }
 }

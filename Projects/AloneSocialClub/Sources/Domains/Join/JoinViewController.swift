@@ -5,12 +5,14 @@
 //  Created by Suyeol Jeon on 07/10/2019.
 //
 
+import AuthenticationServices
 import UIKit
 
 import AsyncDisplayKit
 import BonMot
 import Pure
 import ReactorKit
+import RxRelay
 import RxSwift
 
 final class JoinViewController: BaseViewController, View, FactoryModule {
@@ -45,12 +47,18 @@ final class JoinViewController: BaseViewController, View, FactoryModule {
       .font(.systemFont(ofSize: 18, weight: .bold)),
       .color(.white)
     ])
+    static let or = StringStyle([
+      .font(.systemFont(ofSize: 16, weight: .semibold)),
+      .color(.oc_gray5),
+      .alignment(.center)
+    ])
   }
 
 
   // MARK: Properties
 
   private let dependency: Dependency
+  private let signInWithAppleButtonTap = PublishRelay<Void>()
 
 
   // MARK: UI
@@ -67,6 +75,14 @@ final class JoinViewController: BaseViewController, View, FactoryModule {
     $0.setBackgroundImage(UIImage.resizable().corner(radius: 5).color(.oc_blue5).image, for: .normal)
     $0.setBackgroundImage(UIImage.resizable().corner(radius: 5).color(.oc_blue7).image, for: .highlighted)
   }
+
+  private let orTextNode = ASTextNode().then {
+    $0.attributedText = "OR".styled(with: Typo.or)
+  }
+
+  private let signInWithAppleButton: ASAuthorizationAppleIDButton
+  private let signInWithAppleButtonNode: ASDisplayNode
+
   private let activityIndicatorNode = ActivityIndicatorNode(style: .medium)
 
 
@@ -75,7 +91,15 @@ final class JoinViewController: BaseViewController, View, FactoryModule {
   init(dependency: Dependency, payload: Payload) {
     defer { self.reactor = payload.reactor }
     self.dependency = dependency
+
+    let signInWithAppleButton = ASAuthorizationAppleIDButton()
+    signInWithAppleButton.cornerRadius = 5
+    self.signInWithAppleButton = signInWithAppleButton
+    self.signInWithAppleButtonNode = ASDisplayNode(viewBlock: { signInWithAppleButton })
+
     super.init()
+
+    self.signInWithAppleButton.addTarget(self, action: #selector(didTapSignInWithAppleButton), for: .touchUpInside)
   }
 
   required convenience init(coder aDecoder: NSCoder) {
@@ -95,6 +119,7 @@ final class JoinViewController: BaseViewController, View, FactoryModule {
 
   func bind(reactor: JoinViewReactor) {
     self.bindJoinButton(reactor: reactor)
+    self.bindSignInWithAppleButton(reactor: reactor)
     self.bindNavigation(reactor: reactor)
   }
 
@@ -113,14 +138,28 @@ final class JoinViewController: BaseViewController, View, FactoryModule {
       .disposed(by: self.disposeBag)
   }
 
+  private func bindSignInWithAppleButton(reactor: JoinViewReactor) {
+    self.signInWithAppleButtonTap
+      .map { Reactor.Action.signInWithApple }
+      .bind(to: reactor.action)
+      .disposed(by: self.disposeBag)
+  }
+
   private func bindNavigation(reactor: JoinViewReactor) {
-    reactor.state.map { $0.isJoined }
+    reactor.state.map { $0.isAuthenticated }
       .distinctUntilChanged()
       .filter { $0 == true }
       .subscribe(onNext: { [weak self] _ in
         self?.dependency.sceneSwitcher.switch(to: .main)
       })
       .disposed(by: self.disposeBag)
+  }
+
+
+  // MARK: Actions
+
+  @objc private func didTapSignInWithAppleButton() {
+    self.signInWithAppleButtonTap.accept(Void())
   }
 
 
@@ -139,7 +178,13 @@ final class JoinViewController: BaseViewController, View, FactoryModule {
         self.spacing(height: 30),
         self.joinButtonNode.styled {
           $0.preferredSize.height = 40
-        }
+        },
+        self.spacing(height: 30),
+        self.orTextNode,
+        self.spacing(height: 30),
+        self.signInWithAppleButtonNode.styled {
+          $0.preferredSize.height = 40
+        },
       ]
     )
     return ASInsetLayoutSpec(

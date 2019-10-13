@@ -12,21 +12,23 @@ import RxSwift
 final class JoinViewReactor: Reactor, FactoryModule {
   struct Dependency {
     let authService: AuthServiceProtocol
+    let appleAuthService: AppleAuthServiceProtocol
   }
 
   enum Action {
     case join(name: String)
+    case signInWithApple
   }
 
   enum Mutation {
     case setLoading(Bool)
-    case setJoined
+    case setAuthenticated
     case setError(Error)
   }
 
   struct State {
     var isLoading: Bool = false
-    var isJoined: Bool = false
+    var isAuthenticated: Bool = false
     var errorMessage: String?
   }
 
@@ -47,14 +49,51 @@ final class JoinViewReactor: Reactor, FactoryModule {
         self.join(name: name),
         Observable.just(Mutation.setLoading(false)),
       ])
+
+    case .signInWithApple:
+      return Observable.concat([
+        Observable.just(Mutation.setLoading(true)),
+        self.signInWithApple(),
+        Observable.just(Mutation.setLoading(false)),
+      ])
     }
   }
 
   private func join(name: String) -> Observable<Mutation> {
     return self.dependency.authService.join(name: name)
-      .map { _ in Mutation.setJoined }
+      .map { _ in Mutation.setAuthenticated }
       .catchError { error in .just(Mutation.setError(error)) }
       .asObservable()
+  }
+
+  private func signInWithApple() -> Observable<Mutation> {
+    let dependency = self.dependency
+    let loginWithAppleCredential = self.loginWithAppleCredential
+    let joinAndConnectAppleCredential = self.joinAndConnectAppleCredential
+
+    return dependency.appleAuthService.authenticate()
+      .flatMap { credential -> Single<Mutation> in
+        loginWithAppleCredential(credential).catchError { error in
+          guard error.httpStatusCode == 401 else { return .error(error) }
+          return joinAndConnectAppleCredential(credential)
+        }
+      }
+      .catchError { error in .just(Mutation.setError(error)) }
+      .asObservable()
+  }
+
+  private func loginWithAppleCredential(_ credential: AppleIDCredential) -> Single<Mutation> {
+    return dependency.authService.loginWithApple(userIdentifier: credential.userIdentifier, authorizationCode: credential.authorizationCode)
+      .map { _ in Mutation.setAuthenticated }
+  }
+
+  private func joinAndConnectAppleCredential(_ credential: AppleIDCredential) -> Single<Mutation> {
+    let dependency = self.dependency
+    return dependency.authService.join(name: credential.displayName)
+      .flatMap { _ in
+        dependency.authService.connectAppleCredential(userIdentifier: credential.userIdentifier, authorizationCode: credential.authorizationCode)
+      }
+      .map { _ in Mutation.setAuthenticated }
   }
 
   func reduce(state: State, mutation: Mutation) -> State {
@@ -63,8 +102,8 @@ final class JoinViewReactor: Reactor, FactoryModule {
     case let .setLoading(isLoading):
       newState.isLoading = isLoading
 
-    case .setJoined:
-      newState.isJoined = true
+    case .setAuthenticated:
+      newState.isAuthenticated = true
 
     case let .setError(error):
       newState.errorMessage = error.localizedDescription
