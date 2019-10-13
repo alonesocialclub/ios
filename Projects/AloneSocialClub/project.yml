@@ -14,16 +14,18 @@ targets:
     preBuildScripts:
     - name: Highlight TODO and FIXME
       script: |
-        [[ -z "${GITHUB_WORKFLOW}" ]] && \
+        if [[ -z "${GITHUB_WORKFLOW}" ]]; then
           ${PODS_ROOT}/SwiftLint/swiftlint lint \
             --config "${SRCROOT}/.swiftlint-todo.yml" \
             --path "${SRCROOT}/Projects/AloneSocialClub"
+        fi
     - name: SwiftLint
       script: |
-        [[ -z "${GITHUB_WORKFLOW}" ]] && \
+        if [[ -z "${GITHUB_WORKFLOW}" ]]; then
           ${PODS_ROOT}/SwiftLint/swiftlint lint \
             --config "${SRCROOT}/.swiftlint.yml" \
             --path "${SRCROOT}/Projects/AloneSocialClub"
+        fi
     settings:
       base:
         PRODUCT_NAME: AloneSocialClub
