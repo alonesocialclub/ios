@@ -30,8 +30,8 @@ targets:
       base:
         PRODUCT_NAME: AloneSocialClub
         PRODUCT_BUNDLE_IDENTIFIER: com.alonesocialclub.ios
-        MARKETING_VERSION: 0.3.0
-        CURRENT_PROJECT_VERSION: 3
+        MARKETING_VERSION: 0.4.0
+        CURRENT_PROJECT_VERSION: 4
         INFOPLIST_FILE: "$(SRCROOT)/Projects/AloneSocialClub/Supporting Files/Info.plist"
         TARGETED_DEVICE_FAMILY: 1
         DEVELOPMENT_TEAM: N2C267LBVY
