@@ -11,6 +11,7 @@ import AuthenticationServices
 protocol AuthServiceProtocol {
   func join(name: String) -> Single<User>
   func loginWithApple(userIdentifier: String, authorizationCode: String) -> Single<User>
+  func connectAppleCredential(userIdentifier: String, authorizationCode: String) -> Single<Void>
 }
 
 final class AuthService: AuthServiceProtocol {
@@ -38,6 +39,11 @@ final class AuthService: AuthServiceProtocol {
         try self?.authTokenStore.save(response.authToken)
       })
       .map { $0.user }
+  }
+
+  func connectAppleCredential(userIdentifier: String, authorizationCode: String) -> Single<Void> {
+    return self.networking.request(AuthAPI.connectAppleCredential(userIdentifier: userIdentifier, authorizationCode: authorizationCode))
+      .map { _ in }
   }
 }
 

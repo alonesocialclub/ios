@@ -10,6 +10,7 @@ import MoyaSugar
 enum AuthAPI: BaseAPI {
   case join(name: String)
   case loginWithApple(userIdentifier: String, authorizationCode: String)
+  case connectAppleCredential(userIdentifier: String, authorizationCode: String)
 }
 
 extension AuthAPI {
@@ -20,6 +21,9 @@ extension AuthAPI {
 
     case .loginWithApple:
       return .post("/login/apple")
+
+    case .connectAppleCredential:
+      return .put("/me/credentials/apple")
     }
   }
 
@@ -33,6 +37,12 @@ extension AuthAPI {
       ]
 
     case let .loginWithApple(userIdentifier, authorizationCode):
+      return JSONEncoding() => [
+        "userIdentifier": userIdentifier,
+        "authorizationCode": authorizationCode,
+      ]
+
+    case let .connectAppleCredential(userIdentifier, authorizationCode):
       return JSONEncoding() => [
         "userIdentifier": userIdentifier,
         "authorizationCode": authorizationCode,

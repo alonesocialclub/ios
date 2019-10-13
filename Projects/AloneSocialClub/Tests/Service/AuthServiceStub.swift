@@ -17,4 +17,8 @@ final class AuthServiceStub: AuthServiceProtocol {
   func loginWithApple(userIdentifier: String, authorizationCode: String) -> Single<User> {
     return Stubber.invoke(loginWithApple, args: (userIdentifier, authorizationCode), default: .error(TestError()))
   }
+
+  func connectAppleCredential(userIdentifier: String, authorizationCode: String) -> Single<Void> {
+    return Stubber.invoke(connectAppleCredential, args: (userIdentifier, authorizationCode), default: .error(TestError()))
+  }
 }
