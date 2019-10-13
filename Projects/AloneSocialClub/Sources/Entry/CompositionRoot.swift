@@ -5,6 +5,8 @@
 //  Created by Suyeol Jeon on 06/10/2019.
 //
 
+import AuthenticationServices
+
 import KeychainAccess
 import Pure
 import ReactorKit
@@ -48,6 +50,9 @@ private extension AppDependency {
     self.container.autoregister(PictureServiceProtocol.self, initializer: PictureService.init)
     self.container.autoregister(PostServiceProtocol.self, initializer: PostService.init)
     self.container.autoregister(UserServiceProtocol.self, initializer: UserService.init)
+
+    self.container.register(ASAuthorizationControllerProtocol.Type.self) { _ in ASAuthorizationController.self }
+    self.container.autoregister(AppleAuthServiceProtocol.self, initializer: AppleAuthService.init)
   }
 }
 
