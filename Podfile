@@ -5,7 +5,9 @@ use_frameworks!
 
 target 'AloneSocialClub' do
   pod 'ReactorKit'
-  pod 'Texture'
+  pod 'Texture',
+    :git => 'https://github.com/TextureGroup/Texture.git',
+    :branch => 'releases/p7.37'
 
   # DI
   pod 'Pure'

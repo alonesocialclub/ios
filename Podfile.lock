@@ -23,20 +23,20 @@ PODS:
     - MoyaSugar/Core
     - RxSwift (>= 5.0.0)
   - Nimble (8.0.4)
-  - PINCache (3.0.1-beta.6):
-    - PINCache/Arc-exception-safe (= 3.0.1-beta.6)
-    - PINCache/Core (= 3.0.1-beta.6)
-  - PINCache/Arc-exception-safe (3.0.1-beta.6):
+  - PINCache (3.0.1-beta.7):
+    - PINCache/Arc-exception-safe (= 3.0.1-beta.7)
+    - PINCache/Core (= 3.0.1-beta.7)
+  - PINCache/Arc-exception-safe (3.0.1-beta.7):
     - PINCache/Core
-  - PINCache/Core (3.0.1-beta.6):
-    - PINOperation (~> 1.1.0)
+  - PINCache/Core (3.0.1-beta.7):
+    - PINOperation (~> 1.1.1)
   - PINOperation (1.1.2)
-  - PINRemoteImage/Core (3.0.0-beta.13):
+  - PINRemoteImage/Core (3.0.0-beta.14):
     - PINOperation
-  - PINRemoteImage/iOS (3.0.0-beta.13):
+  - PINRemoteImage/iOS (3.0.0-beta.14):
     - PINRemoteImage/Core
-  - PINRemoteImage/PINCache (3.0.0-beta.13):
-    - PINCache (= 3.0.1-beta.6)
+  - PINRemoteImage/PINCache (3.0.0-beta.14):
+    - PINCache (= 3.0.1-beta.7)
     - PINRemoteImage/Core
   - PryntTrimmerView (4.0.0)
   - Pure (1.1.1):
@@ -102,7 +102,7 @@ PODS:
   - Texture/Photos (2.8.1):
     - Texture/Core
   - Texture/PINRemoteImage (2.8.1):
-    - PINRemoteImage/iOS (= 3.0.0-beta.13)
+    - PINRemoteImage/iOS (= 3.0.0-beta.14)
     - PINRemoteImage/PINCache
     - Texture/Core
   - Texture/Video (2.8.1):
@@ -143,7 +143,7 @@ DEPENDENCIES:
   - SwiftyImage
   - Swinject
   - SwinjectAutoregistration
-  - Texture
+  - Texture (from `https://github.com/TextureGroup/Texture.git`, branch `releases/p7.37`)
   - Then
   - URLNavigator
   - YPImagePicker
@@ -183,10 +183,19 @@ SPEC REPOS:
     - SwiftyImage
     - Swinject
     - SwinjectAutoregistration
-    - Texture
     - Then
     - URLNavigator
     - YPImagePicker
+
+EXTERNAL SOURCES:
+  Texture:
+    :branch: releases/p7.37
+    :git: https://github.com/TextureGroup/Texture.git
+
+CHECKOUT OPTIONS:
+  Texture:
+    :commit: dab927bb22b5ca4ec90c89a3b3e7278a2c04b923
+    :git: https://github.com/TextureGroup/Texture.git
 
 SPEC CHECKSUMS:
   Alamofire: f9450d3c7f6bea2ad62e7a541c3e9b186c7991d6
@@ -198,9 +207,9 @@ SPEC CHECKSUMS:
   Moya: 53fa45a72929809e0b8bba44a0a53d8d0827bcfe
   MoyaSugar: 2dc7009e9997d13768bfb7c0bd5a1fd27314d61b
   Nimble: 18d5360282923225d62b09d781f63abc1a0111fc
-  PINCache: d195fdba255283f7e9900a55e3cced377f431f9b
+  PINCache: 7cb9ae068c8f655717f7c644ef1dff9fd573e979
   PINOperation: 24b774353ca248fcf87d67b2d61eef42087c125a
-  PINRemoteImage: d6d51c5d2adda55f1ce30c96e850b6c4ebd2856a
+  PINRemoteImage: 81bbff853acc71c6de9e106e9e489a791b8bbb08
   PryntTrimmerView: 67e67573ffd4c073f1308effa66aefd0cfa667a0
   Pure: 357b42547feb653dd88d47ac7c8248bf84afaaad
   Quick: 7fb19e13be07b5dfb3b90d4f9824c855a11af40e
@@ -222,11 +231,11 @@ SPEC CHECKSUMS:
   SwiftyImage: 88a8c90ee3963a498de728c4ccdb079b4820cef0
   Swinject: ddf78b8486dd9b71a667b852cad919ab4484478e
   SwinjectAutoregistration: d0de7e48db3601b8b130f2f84e5a8399e0224135
-  Texture: 8ecf6984065a1e54f06bf97b349ecca28582acd7
+  Texture: 6811322192a44ed35bcd53772aa8df8965d9796b
   Then: 90cd104fd951cec1980a03f57704ad8f784d4d79
   URLNavigator: 0bffc3efdeb2d97f7b5eec7ac82d290f4a099431
   YPImagePicker: bdaa46782668e260fdd9709f19043a9f469fd2ad
 
-PODFILE CHECKSUM: 9c793e72dabfbe78d6212bc0f1603918104812d9
+PODFILE CHECKSUM: 774254d7ba7b72c8c0b9d9996ccdffd332c40274
 
 COCOAPODS: 1.8.3
