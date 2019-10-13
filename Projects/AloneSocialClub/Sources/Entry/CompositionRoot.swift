@@ -49,6 +49,8 @@ private extension AppDependency {
     self.container.autoregister(FeedServiceProtocol.self, initializer: FeedService.init)
     self.container.autoregister(PictureServiceProtocol.self, initializer: PictureService.init)
     self.container.autoregister(PostServiceProtocol.self, initializer: PostService.init)
+
+    self.container.autoregister(CurrentUser.self, initializer: CurrentUser.init)
     self.container.autoregister(UserServiceProtocol.self, initializer: UserService.init)
 
     self.container.register(ASAuthorizationControllerProtocol.Type.self) { _ in ASAuthorizationController.self }

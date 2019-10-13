@@ -17,10 +17,12 @@ protocol AuthServiceProtocol {
 final class AuthService: AuthServiceProtocol {
   private let networking: NetworkingProtocol
   private let authTokenStore: AuthTokenStore
+  private let currentUser: CurrentUser
 
-  init(networking: NetworkingProtocol, authTokenStore: AuthTokenStore) {
+  init(networking: NetworkingProtocol, authTokenStore: AuthTokenStore, currentUser: CurrentUser) {
     self.networking = networking
     self.authTokenStore = authTokenStore
+    self.currentUser = currentUser
   }
 
   func join(name: String) -> Single<User> {
@@ -30,6 +32,9 @@ final class AuthService: AuthServiceProtocol {
         try self?.authTokenStore.save(response.authToken)
       })
       .map { $0.user }
+      .do(onSuccess: { [weak self] newUser in
+        self?.currentUser.value = newUser
+      })
   }
 
   func loginWithApple(userIdentifier: String, authorizationCode: String) -> Single<User> {
@@ -39,6 +44,9 @@ final class AuthService: AuthServiceProtocol {
         try self?.authTokenStore.save(response.authToken)
       })
       .map { $0.user }
+      .do(onSuccess: { [weak self] newUser in
+        self?.currentUser.value = newUser
+      })
   }
 
   func connectAppleCredential(userIdentifier: String, authorizationCode: String) -> Single<Void> {
