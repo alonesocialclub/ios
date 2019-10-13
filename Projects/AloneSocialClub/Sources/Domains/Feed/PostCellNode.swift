@@ -68,9 +68,16 @@ private final class PostContentNode: ASDisplayNode {
 
   private enum Typo {
     static let text = StringStyle([
-      .font(.systemFont(ofSize: 18, weight: .bold)),
+      .font(.systemFont(ofSize: 16, weight: .regular)),
       .color(.oc_gray9),
-      .baselineOffset(1),
+    ])
+    static let name = StringStyle([
+      .font(.systemFont(ofSize: 16, weight: .semibold)),
+      .color(.oc_gray9),
+    ])
+    static let date = StringStyle([
+      .font(.systemFont(ofSize: 14, weight: .regular)),
+      .color(.oc_gray5),
     ])
   }
 
@@ -81,12 +88,19 @@ private final class PostContentNode: ASDisplayNode {
     $0.placeholderColor = .as_placeholder
     $0.placeholderFadeDuration = 0.3
   }
+  private let textNode = ASTextNode().then {
+    $0.maximumNumberOfLines = 2
+    $0.truncationAttributedText = "...".styled(with: Typo.text)
+  }
   private let avatarNode = ASNetworkImageNode().then {
     $0.placeholderColor = .as_placeholder
     $0.placeholderFadeDuration = 0.3
   }
-  private let textNode = ASTextNode().then {
-    $0.maximumNumberOfLines = 2
+  private let nameNode = ASTextNode().then {
+    $0.maximumNumberOfLines = 1
+  }
+  private let dateNode = ASTextNode().then {
+    $0.maximumNumberOfLines = 1
   }
 
 
@@ -103,49 +117,77 @@ private final class PostContentNode: ASDisplayNode {
 
   private func configure(post: Post) {
     self.imageNode.setImage(with: post.picture, size: .large)
+    self.textNode.attributedText = post.text.styled(with: Typo.text)
     if let avatarPicture = post.author.profile.picture {
       self.avatarNode.setImage(with: avatarPicture, size: .small)
     } else {
       self.avatarNode.image = UIImage.emptyAvatar
     }
-    self.textNode.attributedText = post.text.styled(with: Typo.text)
+    self.nameNode.attributedText = post.author.profile.name.styled(with: Typo.name)
+    self.dateNode.attributedText = post.createdAt.timeAgo.styled(with: Typo.date)
+
+
+//    let formatter = DateFormatter()
+//    formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+//    self.dateNode.attributedText = formatter.date(from: "2018-01-12T12:34:56+0900")!.timeAgo.styled(with: Typo.date)
   }
 
 
   // MARK: Layout
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-    return ASStackLayoutSpec(
+    let content = ASStackLayoutSpec(
       direction: .vertical,
       spacing: 15,
       justifyContent: .start,
       alignItems: .stretch,
       children: [
         self.imageLayout(),
-        self.avatarAndTextLayout()
+        self.authorAndDateLayout(),
+        self.textLayout(),
       ]
     )
+    return ASInsetLayoutSpec(insets: UIEdgeInsets(bottom: 15), child: content)
   }
 
   private func imageLayout() -> ASLayoutElement {
     return ASRatioLayoutSpec(ratio: 1, child: self.imageNode)
   }
 
-  private func avatarAndTextLayout() -> ASLayoutElement {
+  private func authorAndDateLayout() -> ASLayoutElement {
     let content = ASStackLayoutSpec(
+      direction: .horizontal,
+      spacing: 15,
+      justifyContent: .spaceBetween,
+      alignItems: .center,
+      children: [
+        self.avatarAndNameLayout(),
+        self.dateNode,
+      ]
+    )
+    return ASInsetLayoutSpec(insets: UIEdgeInsets(horizontal: 15), child: content)
+  }
+
+  private func avatarAndNameLayout() -> ASLayoutElement {
+    return ASStackLayoutSpec(
       direction: .horizontal,
       spacing: 15,
       justifyContent: .start,
       alignItems: .center,
       children: [
         self.avatarNode.styled {
-          $0.preferredSize.width = 45
-          $0.preferredSize.height = 45
+          $0.preferredSize.width = 30
+          $0.preferredSize.height = 30
         },
-        self.textNode,
+        self.nameNode.styled {
+          $0.flexShrink = 1
+        },
       ]
     )
-    return ASInsetLayoutSpec(insets: UIEdgeInsets(left: 15, bottom: 15, right: 30), child: content)
+  }
+
+  private func textLayout() -> ASLayoutElement {
+    return ASInsetLayoutSpec(insets: UIEdgeInsets(horizontal: 15), child: self.textNode)
   }
 
   override func layoutDidFinish() {
