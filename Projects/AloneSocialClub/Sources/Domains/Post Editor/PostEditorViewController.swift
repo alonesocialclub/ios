@@ -53,7 +53,7 @@ final class PostEditorViewController: BaseViewController, View, FactoryModule {
 
   private let cancelButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: nil, action: nil)
   private let submitButtonItem = UIBarButtonItem(title: "Post", style: .done, target: nil, action: nil)
-  private let activityIndicatorButtonItem = ActivityIndicatorBarButtonItem(style: .gray)
+  private let activityIndicatorButtonItem = ActivityIndicatorBarButtonItem(style: .medium)
 
   private let scrollNode = ASScrollNode().then {
     $0.automaticallyManagesSubnodes = true
@@ -289,7 +289,7 @@ final class PostEditorViewController: BaseViewController, View, FactoryModule {
 
     let bottomInset = max(0, visibleKeyboardHeight - self.node.safeAreaInsets.bottom)
     self.scrollNode.view.contentInset.bottom = bottomInset
-    self.scrollNode.view.scrollIndicatorInsets.bottom = bottomInset
+    self.scrollNode.view.verticalScrollIndicatorInsets.bottom = bottomInset
 
     self.scrollToTextNodeCaret()
   }

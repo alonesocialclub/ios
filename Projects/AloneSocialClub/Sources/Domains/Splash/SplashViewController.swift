@@ -47,7 +47,7 @@ final class SplashViewController: BaseViewController, View, FactoryModule {
   private let titleNode = ASTextNode().then {
     $0.attributedText = "Alone\nSocial\nClub".styled(with: Typo.title)
   }
-  private let activityIndicatorNode = ActivityIndicatorNode(style: .gray)
+  private let activityIndicatorNode = ActivityIndicatorNode(style: .medium)
 
 
   // MARK: Initializing

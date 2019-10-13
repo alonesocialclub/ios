@@ -67,7 +67,7 @@ final class JoinViewController: BaseViewController, View, FactoryModule {
     $0.setBackgroundImage(UIImage.resizable().corner(radius: 5).color(.oc_blue5).image, for: .normal)
     $0.setBackgroundImage(UIImage.resizable().corner(radius: 5).color(.oc_blue7).image, for: .highlighted)
   }
-  private let activityIndicatorNode = ActivityIndicatorNode(style: .gray)
+  private let activityIndicatorNode = ActivityIndicatorNode(style: .medium)
 
 
   // MARK: Initializing
