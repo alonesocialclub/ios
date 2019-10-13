@@ -34,6 +34,7 @@ targets:
         TARGETED_DEVICE_FAMILY: 1
         DEVELOPMENT_TEAM: N2C267LBVY
         PROVISIONING_PROFILE_SPECIFIER: Alone Social Club App Store
+        CODE_SIGN_ENTITLEMENTS: ${SRCROOT}/Projects/AloneSocialClub/Supporting Files/AloneSocialClub.entitlements
       configs:
         debug:
           CODE_SIGN_IDENTITY: Apple Developer
