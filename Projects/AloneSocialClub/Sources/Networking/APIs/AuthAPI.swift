@@ -9,6 +9,7 @@ import MoyaSugar
 
 enum AuthAPI: BaseAPI {
   case join(name: String)
+  case loginWithApple(userIdentifier: String, authorizationCode: String)
 }
 
 extension AuthAPI {
@@ -16,6 +17,9 @@ extension AuthAPI {
     switch self {
     case .join:
       return .post("/anonymous/join")
+
+    case .loginWithApple:
+      return .post("/login/apple")
     }
   }
 
@@ -26,6 +30,12 @@ extension AuthAPI {
         "profile": [
           "name": name
         ]
+      ]
+
+    case let .loginWithApple(userIdentifier, authorizationCode):
+      return JSONEncoding() => [
+        "userIdentifier": userIdentifier,
+        "authorizationCode": authorizationCode,
       ]
     }
   }

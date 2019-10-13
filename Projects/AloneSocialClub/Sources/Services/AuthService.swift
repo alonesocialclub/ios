@@ -6,9 +6,11 @@
 //
 
 import RxSwift
+import AuthenticationServices
 
 protocol AuthServiceProtocol {
   func join(name: String) -> Single<User>
+  func loginWithApple(userIdentifier: String, authorizationCode: String) -> Single<User>
 }
 
 final class AuthService: AuthServiceProtocol {
@@ -22,7 +24,16 @@ final class AuthService: AuthServiceProtocol {
 
   func join(name: String) -> Single<User> {
     return self.networking.request(AuthAPI.join(name: name))
-      .map(JoinResponse.self)
+      .map(AuthResponse.self)
+      .do(onSuccess: { [weak self] response in
+        try self?.authTokenStore.save(response.authToken)
+      })
+      .map { $0.user }
+  }
+
+  func loginWithApple(userIdentifier: String, authorizationCode: String) -> Single<User> {
+    return self.networking.request(AuthAPI.loginWithApple(userIdentifier: userIdentifier, authorizationCode: authorizationCode))
+      .map(AuthResponse.self)
       .do(onSuccess: { [weak self] response in
         try self?.authTokenStore.save(response.authToken)
       })
@@ -30,7 +41,7 @@ final class AuthService: AuthServiceProtocol {
   }
 }
 
-private struct JoinResponse: Decodable {
+private struct AuthResponse: Decodable {
   let authToken: String
   let user: User
 }

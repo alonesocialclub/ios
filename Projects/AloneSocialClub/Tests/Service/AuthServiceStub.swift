@@ -13,4 +13,8 @@ final class AuthServiceStub: AuthServiceProtocol {
   func join(name: String) -> Single<User> {
     return Stubber.invoke(join, args: name, default: .error(TestError()))
   }
+
+  func loginWithApple(userIdentifier: String, authorizationCode: String) -> Single<User> {
+    return Stubber.invoke(loginWithApple, args: (userIdentifier, authorizationCode), default: .error(TestError()))
+  }
 }
