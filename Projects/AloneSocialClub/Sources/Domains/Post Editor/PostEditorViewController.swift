@@ -139,6 +139,7 @@ final class PostEditorViewController: BaseViewController, View, FactoryModule {
   private func bindCancel(reactor: PostEditorViewReactor) {
     self.cancelButtonItem.rx.tap
       .subscribe(onNext: { [weak self] in
+        // TODO: confirm if edited
         self?.dismiss(animated: true, completion: nil)
       })
       .disposed(by: self.disposeBag)

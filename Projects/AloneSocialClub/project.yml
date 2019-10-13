@@ -12,9 +12,15 @@ targets:
     attributes:
       ProvisioningStyle: Manual
     preBuildScripts:
+    - name: Highlight TODO and FIXME
+      script: |
+        [[ -z "${GITHUB_WORKFLOW}" ]] && \
+          ${PODS_ROOT}/SwiftLint/swiftlint lint \
+            --config "${SRCROOT}/.swiftlint-todo.yml" \
+            --path "${SRCROOT}/Projects/AloneSocialClub"
     - name: SwiftLint
       script: |
-        [[ -z "${GITHUB_WORKFLOW}" ]] || \
+        [[ -z "${GITHUB_WORKFLOW}" ]] && \
           ${PODS_ROOT}/SwiftLint/swiftlint lint \
             --config "${SRCROOT}/.swiftlint.yml" \
             --path "${SRCROOT}/Projects/AloneSocialClub"
