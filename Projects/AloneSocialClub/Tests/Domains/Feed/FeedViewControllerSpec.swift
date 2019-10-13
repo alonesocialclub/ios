@@ -14,7 +14,8 @@ extension Factory where Module == FeedViewController {
       reactorFactory: .dummy(),
       titleCellNodeFactory: .init(dependency: .init(
         postEditorViewControllerFactory: .dummy(),
-        navigator: NavigatorStub()
+        navigator: NavigatorStub(),
+        currentUser: CurrentUser()
       )),
       postCellNodeFactory: .init(dependency: .init())
     ))
