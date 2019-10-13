@@ -9,7 +9,7 @@ import MoyaSugar
 
 enum PictureAPI: BaseAPI {
   case upload(UIImage)
-  case image(pictureID: String)
+  case image(pictureID: String, width: Int)
 }
 
 extension PictureAPI {
@@ -18,8 +18,8 @@ extension PictureAPI {
     case .upload:
       return .post("/pictures")
 
-    case let .image(pictureID):
-      return .get("/pictures/\(pictureID)/image/original")
+    case let .image(pictureID, width):
+      return .get("/pictures/\(pictureID)/image/\(width)x-")
     }
   }
 

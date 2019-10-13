@@ -102,9 +102,9 @@ private final class PostContentNode: ASDisplayNode {
   }
 
   private func configure(post: Post) {
-    self.imageNode.setImage(with: post.picture)
+    self.imageNode.setImage(with: post.picture, size: .hd)
     if let avatarPicture = post.author.profile.picture {
-      self.avatarNode.setImage(with: avatarPicture)
+      self.avatarNode.setImage(with: avatarPicture, size: .small)
     } else {
       self.avatarNode.image = UIImage.emptyAvatar
     }
