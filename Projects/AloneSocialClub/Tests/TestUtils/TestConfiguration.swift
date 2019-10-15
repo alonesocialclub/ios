@@ -13,5 +13,10 @@ class TestConfiguration: QuickConfiguration {
     configuration.beforeEach {
       Stubber.clear()
     }
+    configuration.afterEach {
+      Stubber.clear()
+    }
+
+    verifyMainSchedulerIsEmpty(configuration: configuration)
   }
 }
