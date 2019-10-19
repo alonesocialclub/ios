@@ -43,7 +43,8 @@ jobs:
           --scheme "$SCHEME" \
           --device "$DEVICE" \
           --config Debug \
-          --output_style rspec
+          --output_style rspec \
+          --xcargs "OTHER_SWIFT_FLAGS='\$(inherited) -suppress-warnings'"
 
     - name: Upload Code Coverage
       run: |
