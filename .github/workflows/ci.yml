@@ -44,7 +44,18 @@ jobs:
           --device "$DEVICE" \
           --config Debug \
           --output_style rspec \
-          --xcargs "OTHER_SWIFT_FLAGS='\$(inherited) -suppress-warnings'"
+          --xcargs "OTHER_SWIFT_FLAGS='\$(inherited) -suppress-warnings'" \
+          | grep --line-buffered -v "\[MT\]" \
+          | grep --line-buffered -v "DTDeviceKit" \
+          | grep --line-buffered -v "SimDevice" \
+          | grep --line-buffered -v "IDETestOperationsObserverDebug" \
+          | grep --line-buffered -v "iPhoneSupport" \
+          | grep --line-buffered -v "/Diagnostics/" \
+          | grep --line-buffered -v "DVTiPhoneSimulator" \
+          | grep --line-buffered -v "Method:   -primaryInstrumentsServerWithError:" \
+          | grep --line-buffered -v "Thread:   <NSThread:" \
+          | grep --line-buffered -v "Please file a bug at" \
+          | egrep --line-buffered -v "\} \(\d+\.\d+"
 
     - name: Upload Code Coverage
       run: |
