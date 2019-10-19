@@ -15,17 +15,6 @@ settings:
     CLANG_ENABLE_MODULES: YES
     COPY_PHASE_STRIP: NO
 
-  configs:
-    debug:
-      SWIFT_OPTIMIZATION_LEVEL: -Onone
-      ENABLE_TESTABILITY: YES
-      ONLY_ACTIVE_ARCH: YES
-      SWIFT_COMPILATION_MODE: incremental
-
-    release:
-      SWIFT_OPTIMIZATION_LEVEL: -O
-      SWIFT_COMPILATION_MODE: wholemodule
-
 schemes:
   AllTests:
     build:
