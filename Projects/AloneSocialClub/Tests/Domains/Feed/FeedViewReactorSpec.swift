@@ -12,7 +12,8 @@ extension Factory where Module == FeedViewReactor {
   static func dummy() -> Factory {
     return .init(dependency: .init(
       feedService: FeedServiceStub(),
-      postService: PostServiceStub()
+      postService: PostServiceStub(),
+      postCellNodeReactorFactory: .dummy()
     ))
   }
 }

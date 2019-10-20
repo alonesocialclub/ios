@@ -13,6 +13,7 @@ final class FeedViewReactor: Reactor, FactoryModule {
   struct Dependency {
     let feedService: FeedServiceProtocol
     let postService: PostServiceProtocol
+    let postCellNodeReactorFactory: PostCellNodeReactor.Factory
   }
 
   enum Action {
@@ -30,7 +31,7 @@ final class FeedViewReactor: Reactor, FactoryModule {
     var isRefreshing: Bool = false
     var sections: [FeedViewSection] = [FeedViewSection(identity: .title, items: [.title])]
 
-    fileprivate var posts: [Post] = []
+    fileprivate var postCellReactors: [PostCellNodeReactor] = []
   }
 
   private let dependency: Dependency
@@ -73,6 +74,9 @@ final class FeedViewReactor: Reactor, FactoryModule {
           Observable.just(Mutation.prependPost(post)),
           Observable.just(Mutation.updateSections),
         ])
+
+      default:
+        return Observable.empty()
       }
     }
   }
@@ -85,10 +89,13 @@ final class FeedViewReactor: Reactor, FactoryModule {
       newState.isRefreshing = isRefreshing
 
     case let .setFeed(feed):
-      newState.posts = feed.posts
+      newState.postCellReactors = feed.posts.map {
+        self.dependency.postCellNodeReactorFactory.create(payload: .init(post: $0))
+      }
 
     case let .prependPost(post):
-      newState.posts.insert(post, at: 0)
+      let cellReactor = self.dependency.postCellNodeReactorFactory.create(payload: .init(post: post))
+      newState.postCellReactors.insert(cellReactor, at: 0)
 
     case .updateSections:
       newState.sections.removeAll()
@@ -96,8 +103,8 @@ final class FeedViewReactor: Reactor, FactoryModule {
 
       newState.sections.append(FeedViewSection(identity: .title, items: [.title]))
 
-      if !newState.posts.isEmpty {
-        let items = newState.posts.map(FeedViewSection.Item.post)
+      if !newState.postCellReactors.isEmpty {
+        let items = newState.postCellReactors.map(FeedViewSection.Item.post)
         let section = FeedViewSection(identity: .feed, items: items)
         newState.sections.append(section)
       }

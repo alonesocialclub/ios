@@ -8,6 +8,8 @@
 import AsyncDisplayKit
 import BonMot
 import Pure
+import ReactorKit
+import RxSwift
 
 final class PostCellNode: ASCellNode, FactoryModule {
 
@@ -17,7 +19,7 @@ final class PostCellNode: ASCellNode, FactoryModule {
   }
 
   struct Payload {
-    let post: Post
+    let reactor: PostCellNodeReactor
   }
 
 
@@ -45,7 +47,7 @@ final class PostCellNode: ASCellNode, FactoryModule {
   init(dependency: Dependency, payload: Payload) {
     self.dependency = dependency
     self.payload = payload
-    self.contentNode = PostContentNode(post: payload.post)
+    self.contentNode = PostContentNode(reactor: payload.reactor)
     self.shadowNode.cornerRadius = self.contentNode.cornerRadius
     super.init()
     self.automaticallyManagesSubnodes = true
@@ -62,7 +64,7 @@ final class PostCellNode: ASCellNode, FactoryModule {
 }
 
 
-private final class PostContentNode: ASDisplayNode {
+private final class PostContentNode: ASDisplayNode, View {
 
   // MARK: Constants
 
@@ -79,7 +81,16 @@ private final class PostContentNode: ASDisplayNode {
       .font(.systemFont(ofSize: 14, weight: .regular)),
       .color(.oc_gray5),
     ])
+    static let pingButtonTitle = StringStyle([
+      .font(.systemFont(ofSize: 14, weight: .semibold)),
+      .color(.white),
+    ])
   }
+
+
+  // MARK: Properties
+
+  var disposeBag = DisposeBag()
 
 
   // MARK: UI
@@ -102,34 +113,76 @@ private final class PostContentNode: ASDisplayNode {
   private let dateNode = ASTextNode().then {
     $0.maximumNumberOfLines = 1
   }
+  private let pingButtonNode = ASButtonNode().then {
+    $0.setAttributedTitle("Ping!".styled(with: Typo.pingButtonTitle), for: .normal)
+    $0.setBackgroundImage(UIImage.resizable().corner(radius: 5).color(.oc_blue5).image, for: .normal)
+    $0.setBackgroundImage(UIImage.resizable().corner(radius: 5).color(.oc_blue7).image, for: .highlighted)
+    $0.hitTestSlop = UIEdgeInsets(all: -10)
+  }
 
 
   // MARK: Initializing
 
-  init(post: Post) {
+  init(reactor: PostCellNodeReactor) {
+    defer { self.reactor = reactor }
     super.init()
     self.automaticallyManagesSubnodes = true
     self.backgroundColor = .white
     self.cornerRadius = 15
     self.clipsToBounds = true
-    self.configure(post: post)
   }
 
-  private func configure(post: Post) {
-    self.imageNode.setImage(with: post.picture, size: .large)
-    self.textNode.attributedText = post.text.styled(with: Typo.text)
-    if let avatarPicture = post.author.profile.picture {
-      self.avatarNode.setImage(with: avatarPicture, size: .small)
-    } else {
-      self.avatarNode.image = UIImage.emptyAvatar
-    }
-    self.nameNode.attributedText = post.author.profile.name.styled(with: Typo.name)
-    self.dateNode.attributedText = post.createdAt.timeAgo.styled(with: Typo.date)
 
+  // MARK: Binding
 
-//    let formatter = DateFormatter()
-//    formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-//    self.dateNode.attributedText = formatter.date(from: "2018-01-12T12:34:56+0900")!.timeAgo.styled(with: Typo.date)
+  func bind(reactor: PostCellNodeReactor) {
+    self.bindImage(reactor: reactor)
+    self.bindText(reactor: reactor)
+    self.bindAuthor(reactor: reactor)
+    self.bindDate(reactor: reactor)
+  }
+
+  func bindImage(reactor: PostCellNodeReactor) {
+    reactor.state.map { $0.post.picture }
+      .distinctUntilChanged()
+      .bind(to: self.imageNode.rx.image(size: .large))
+      .disposed(by: self.disposeBag)
+  }
+
+  func bindText(reactor: PostCellNodeReactor) {
+    reactor.state.map { $0.post.text }
+      .distinctUntilChanged()
+      .map { $0.styled(with: Typo.text) }
+      .bind(to: self.textNode.rx.attributedText)
+      .disposed(by: self.disposeBag)
+  }
+
+  func bindAuthor(reactor: PostCellNodeReactor) {
+    reactor.state.map { $0.post.author.profile.picture }
+      .distinctUntilChanged()
+      .subscribe(onNext: { [weak self] picture in
+        guard let self = self else { return }
+        if let picture = picture {
+          self.avatarNode.setImage(with: picture, size: .small)
+        } else {
+          self.avatarNode.image = UIImage.emptyAvatar
+        }
+      })
+      .disposed(by: self.disposeBag)
+
+    reactor.state.map { $0.post.author.profile.name }
+      .distinctUntilChanged()
+      .map { $0.styled(with: Typo.name) }
+      .bind(to: self.nameNode.rx.attributedText)
+      .disposed(by: self.disposeBag)
+  }
+
+  func bindDate(reactor: PostCellNodeReactor) {
+    reactor.state.map { $0.post.createdAt }
+      .distinctUntilChanged()
+      .map { $0.timeAgo.styled(with: Typo.date) }
+      .bind(to: self.dateNode.rx.attributedText)
+      .disposed(by: self.disposeBag)
   }
 
 
@@ -145,6 +198,7 @@ private final class PostContentNode: ASDisplayNode {
         self.imageLayout(),
         self.authorAndDateLayout(),
         self.textLayout(),
+        self.pingButtonLayout(),
       ]
     )
     return ASInsetLayoutSpec(insets: UIEdgeInsets(bottom: 15), child: content)
@@ -188,6 +242,12 @@ private final class PostContentNode: ASDisplayNode {
 
   private func textLayout() -> ASLayoutElement {
     return ASInsetLayoutSpec(insets: UIEdgeInsets(horizontal: 15), child: self.textNode)
+  }
+
+  private func pingButtonLayout() -> ASLayoutElement {
+    return ASInsetLayoutSpec(insets: UIEdgeInsets(horizontal: 15), child: self.pingButtonNode.styled {
+      $0.preferredSize.height = 30
+    })
   }
 
   override func layoutDidFinish() {

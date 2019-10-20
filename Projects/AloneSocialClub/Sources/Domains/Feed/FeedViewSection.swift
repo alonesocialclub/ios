@@ -26,7 +26,7 @@ extension FeedViewSection: AnimatableSectionModelType {
 extension FeedViewSection {
   enum Item: Hashable {
     case title
-    case post(Post)
+    case post(PostCellNodeReactor)
   }
 }
 

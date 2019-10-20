@@ -65,8 +65,8 @@ final class FeedViewController: BaseViewController, View, FactoryModule {
         case .title:
           return { dependency.titleCellNodeFactory.create() }
 
-        case let .post(post):
-          return { dependency.postCellNodeFactory.create(payload: .init(post: post)) }
+        case let .post(cellReactor):
+          return { dependency.postCellNodeFactory.create(payload: .init(reactor: cellReactor)) }
         }
       }
     )

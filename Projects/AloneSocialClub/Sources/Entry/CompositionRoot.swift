@@ -74,6 +74,7 @@ private extension AppDependency {
 
     self.register(FeedViewTitleCellNode.self, dependency: FeedViewTitleCellNode.Dependency.init)
     self.register(PostCellNode.self, dependency: PostCellNode.Dependency.init)
+    self.register(PostCellNodeReactor.self, dependency: PostCellNodeReactor.Dependency.init)
     self.register(FeedViewReactor.self, dependency: FeedViewReactor.Dependency.init)
     self.register(FeedViewController.self, dependency: FeedViewController.Dependency.init)
 
