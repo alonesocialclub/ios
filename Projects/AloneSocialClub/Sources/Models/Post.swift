@@ -18,5 +18,6 @@ struct Post: Decodable, Hashable {
 extension Post {
   enum Event {
     case create(Post)
+    case ping(postID: String)
   }
 }

@@ -16,4 +16,8 @@ final class PostServiceStub: PostServiceProtocol {
   func create(pictureID: String, text: String) -> Single<Post> {
     return Stubber.invoke(create, args: (pictureID, text), default: .error(TestError()))
   }
+
+  func ping(postID: String, receiverID: String) -> Single<Ping> {
+    return Stubber.invoke(ping, args: (postID, receiverID), default: .error(TestError()))
+  }
 }
