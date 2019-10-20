@@ -9,6 +9,7 @@ import MoyaSugar
 
 enum PostAPI: BaseAPI {
   case create(pictureID: String, text: String)
+  case ping(postID: String, receiverID: String)
 }
 
 extension PostAPI {
@@ -16,6 +17,9 @@ extension PostAPI {
     switch self {
     case .create:
       return .post("/posts")
+
+    case let .ping(postID):
+      return .put("/posts/\(postID)/pings")
     }
   }
 
@@ -27,6 +31,11 @@ extension PostAPI {
           "id": pictureID
         ],
         "text": text
+      ]
+
+    case let .ping(_, receiverID):
+      return JSONEncoding() => [
+        "receiverId": receiverID
       ]
     }
   }
