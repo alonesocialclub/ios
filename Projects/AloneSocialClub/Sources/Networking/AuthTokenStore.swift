@@ -13,11 +13,15 @@ final class AuthTokenStore {
     self.keychain = keychain
   }
 
+  func authToken() -> String? {
+    return try? self.keychain.get(Self.key)
+  }
+
   func save(_ authToken: String) throws {
     try self.keychain.set(authToken, key: Self.key)
   }
 
-  func authToken() -> String? {
-    return try? self.keychain.get(Self.key)
+  func clear() {
+    try? self.keychain.remove(Self.key)
   }
 }

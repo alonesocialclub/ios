@@ -79,6 +79,9 @@ private extension AppDependency {
 
     self.register(PostEditorViewReactor.self, dependency: PostEditorViewReactor.Dependency.init)
     self.register(PostEditorViewController.self, dependency: PostEditorViewController.Dependency.init)
+
+    self.register(SettingsViewController.self, dependency: SettingsViewController.Dependency.init)
+    self.register(SettingsViewReactor.self, dependency: SettingsViewReactor.Dependency.init)
   }
 }
 

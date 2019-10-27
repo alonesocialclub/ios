@@ -12,6 +12,7 @@ protocol AuthServiceProtocol {
   func join(name: String) -> Single<User>
   func loginWithApple(userIdentifier: String, authorizationCode: String) -> Single<User>
   func connectAppleCredential(userIdentifier: String, authorizationCode: String) -> Single<Void>
+  func signOut() -> Completable
 }
 
 final class AuthService: AuthServiceProtocol {
@@ -52,6 +53,14 @@ final class AuthService: AuthServiceProtocol {
   func connectAppleCredential(userIdentifier: String, authorizationCode: String) -> Single<Void> {
     return self.networking.request(AuthAPI.connectAppleCredential(userIdentifier: userIdentifier, authorizationCode: authorizationCode))
       .map { _ in }
+  }
+
+  func signOut() -> Completable {
+    return Completable.create { [weak self] observer in
+      self?.authTokenStore.clear()
+      observer(.completed)
+      return Disposables.create()
+    }
   }
 }
 

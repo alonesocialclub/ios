@@ -16,6 +16,7 @@ final class FeedViewTitleCellNode: ASCellNode, FactoryModule {
   // MARK: Module
 
   struct Dependency {
+    let settingsViewControllerFactory: SettingsViewController.Factory
     let postEditorViewControllerFactory: PostEditorViewController.Factory
     let navigator: NavigatorType
     let currentUser: CurrentUser
@@ -110,6 +111,18 @@ final class FeedViewTitleCellNode: ASCellNode, FactoryModule {
         }
       })
       .disposed(by: self.disposeBag)
+
+    self.avatarButtonNode.rx.tap
+      .subscribe(onNext: { [weak self] in
+        self?.presentSettingsViewController()
+      })
+      .disposed(by: self.disposeBag)
+  }
+
+  private func presentSettingsViewController() {
+    let reactor = self.dependency.settingsViewControllerFactory.dependency.reactorFactory.create()
+    let viewController = self.dependency.settingsViewControllerFactory.create(payload: .init(reactor: reactor))
+    self.dependency.navigator.present(viewController, wrap: UINavigationController.self)
   }
 
   private func configureUploadButton() {
